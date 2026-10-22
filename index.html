@@ -1,0 +1,1069 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Дело № 127</title></head><body>
+<title>Дело № 127</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=PT+Mono&family=Onest:wght@400;500;600;700&family=Caveat:wght@600;700&family=PT+Serif:ital,wght@1,700&display=swap">
+<style>
+/* Layout: нуар-детектив — тёмная доска следователя с карточками улик на красной нити слева, бумажное «дело» с заданием справа. Единый тёмный мир. */
+:root{
+  --night:#14161B; --board:#1F2127; --board-2:#262931; --line:#353943; --dim:#8C877C; --chalk:#E9E4D8;
+  --paper:#EDE6D6; --paper-2:#F7F2E7; --paper-edge:#D9CEB6; --ink:#25211B; --ink-2:#6E6556;
+  --red:#C3322A; --red-hot:#E2483C; --gold:#E3B95B; --kraft:#B8A27A; --sticky:#EFD35C;
+  --ok:#2E7D4F; --ok-soft:#DCEBDD; --bad:#B3261E; --bad-soft:#F3D9D3;
+  --p1:#4A90D9; --p2:#E3B95B; --p3:#3FA38A; --p4:#9B6BD3; --p5:#E0703A; --p6:#D04F8E;
+  --f-head:"Oswald", "Arial Narrow", Impact, sans-serif;
+  --f-type:"PT Mono", "Courier New", ui-monospace, monospace;
+  --f-body:"Onest", Inter, "Segoe UI", system-ui, sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--night);color:var(--chalk);font-family:var(--f-body);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased;
+  background-image:radial-gradient(900px 500px at 15% -10%,rgba(227,185,91,.07),transparent 60%),radial-gradient(700px 500px at 110% 30%,rgba(195,50,42,.08),transparent 60%)}
+.wrap{max-width:1200px;margin:0 auto;padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));padding-block:22px 56px}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px;border-radius:6px}
+.type{font-family:var(--f-type);letter-spacing:.06em}
+.tl{font-family:var(--f-type);font-size:12px;letter-spacing:.14em;text-transform:uppercase}
+
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:18px;color:var(--dim)}
+.top b{font-weight:400;user-select:none;cursor:default}
+.top b i{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--red);margin-right:8px}
+.top .ev{color:var(--chalk)}
+.testbar{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;border:1px dashed var(--gold);color:var(--gold);border-radius:10px;padding:9px 14px;font-size:13px;margin-bottom:14px}
+.link{background:none;border:0;color:inherit;padding:2px 0;font-size:13px;text-decoration:underline;text-underline-offset:3px;opacity:.85}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:8px;padding:13px 20px;font-family:var(--f-head);font-weight:600;font-size:17px;letter-spacing:.04em;text-transform:uppercase;background:var(--red);color:#fff;transition:transform .15s, background .15s;text-align:center}
+.btn:hover{transform:translateY(-1px);background:var(--red-hot)}
+.btn:disabled{opacity:.35;cursor:not-allowed;transform:none}
+.btn.dark{background:var(--ink);color:var(--paper)}
+.btn.dark:hover{background:#3A342B}
+.btn.ghost{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--ink)}
+.btn.wide{width:100%}
+
+/* ---------- INTRO ---------- */
+.intro{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:28px;align-items:start;margin-top:10px}
+.file{position:relative;background:var(--paper);color:var(--ink);border-radius:4px 10px 10px 10px;padding:34px clamp(22px,4vw,44px) 30px;transform:rotate(-.8deg);box-shadow:0 30px 60px rgba(0,0,0,.5);margin-top:18px}
+.file::before{content:"";position:absolute;top:-18px;left:0;width:170px;height:24px;background:var(--paper-edge);border-radius:8px 8px 0 0}
+.file .tab{position:absolute;top:-15px;left:16px;font-family:var(--f-type);font-size:11px;letter-spacing:.14em;color:var(--ink-2)}
+.stamp{display:inline-block;border:3px solid var(--red);color:var(--red);font-family:var(--f-head);font-weight:700;letter-spacing:.14em;padding:3px 12px;font-size:15px;transform:rotate(7deg);border-radius:4px;opacity:.9}
+.file .stamp{position:absolute;right:28px;top:28px}
+.file h1{font-family:var(--f-head);font-weight:700;font-size:clamp(52px,8vw,84px);line-height:.95;letter-spacing:-.01em;margin:10px 0 18px;text-transform:uppercase}
+.dossier{display:grid;grid-template-columns:120px 1fr;gap:6px 14px;margin:0 0 18px;font-size:16px}
+.dossier dt{font-family:var(--f-type);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2);padding-top:3px}
+.dossier dd{margin:0;font-weight:600}
+.file p{margin:0 0 14px;font-size:17px;line-height:1.55}
+.file .who{display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap;margin-top:22px;padding-top:18px;border-top:1.5px dashed var(--paper-edge)}
+.file label{display:block;width:100%;font-family:var(--f-type);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2)}
+.file input{flex:1 1 220px;min-width:0;font:inherit;font-size:18px;font-weight:600;padding:10px 2px;border:0;border-bottom:2px solid var(--ink);background:transparent;color:var(--ink);border-radius:0}
+.file input:focus{outline:none;border-color:var(--red)}
+.file input::placeholder{color:#A99F8C;font-weight:400}
+.note{background:var(--sticky);color:#2B2410;padding:26px 24px;transform:rotate(1.4deg);box-shadow:0 20px 40px rgba(0,0,0,.45);border-radius:2px;position:relative;margin-top:28px}
+.note::before{content:"";position:absolute;top:-10px;left:50%;width:16px;height:16px;margin-left:-8px;border-radius:50%;background:var(--red);box-shadow:0 3px 6px rgba(0,0,0,.4)}
+.note h2{font-family:var(--f-head);font-size:24px;text-transform:uppercase;letter-spacing:.02em;margin:0 0 12px}
+.note ol{margin:0;padding:0;list-style:none;display:grid;gap:10px;counter-reset:n}
+.note li{counter-increment:n;display:grid;grid-template-columns:28px 1fr;gap:8px;font-size:15px;line-height:1.4}
+.note li::before{content:counter(n);font-family:var(--f-head);font-weight:700;font-size:20px;line-height:1}
+.chapters{margin-top:22px;display:grid;gap:6px}
+.chapters div{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:center;font-size:14px;color:var(--chalk)}
+.chapters i{width:12px;height:12px;border-radius:50%;background:var(--pc)}
+.chapters span{color:var(--dim)}
+
+/* ---------- GAME ---------- */
+.game{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);gap:22px;align-items:stretch}
+.boardbox{background:var(--board);border-radius:18px;padding:16px;box-shadow:inset 0 0 0 1px var(--line), 0 20px 50px rgba(0,0,0,.35);
+  background-image:radial-gradient(rgba(255,255,255,.035) 1px,transparent 1.2px);background-size:7px 7px}
+.bhead{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin:0 4px 6px}
+.bhead h2{font-family:var(--f-head);font-weight:700;font-size:26px;letter-spacing:.02em;text-transform:uppercase;margin:0}
+.bhead span{color:var(--dim)}
+.board{position:relative;aspect-ratio:6/5;width:100%;max-height:calc(100vh - 235px);min-height:380px}
+.board svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.cells{position:absolute;inset:0;display:grid;grid-template-columns:repeat(6,1fr);grid-template-rows:repeat(5,1fr)}
+.cell{margin:0;height:86%;aspect-ratio:1;max-width:92%;justify-self:center;align-self:center;border:0;padding:0;position:relative;display:grid;place-items:center;background:var(--paper);color:var(--ink);border-radius:3px;transform:rotate(var(--rot));box-shadow:0 4px 10px rgba(0,0,0,.45);font-family:var(--f-head);font-weight:700;font-size:clamp(13px,1.7vw,22px);cursor:default;transition:transform .25s, box-shadow .25s}
+.cell::before{content:"";position:absolute;top:-5px;left:50%;width:10px;height:10px;margin-left:-5px;border-radius:50%;background:var(--pc);box-shadow:0 2px 3px rgba(0,0,0,.5);z-index:1}
+.cell .no{position:absolute;left:8%;bottom:4%;font-family:var(--f-type);font-weight:400;font-size:clamp(7px,.75vw,10px);color:var(--ink-2)}
+.cell .lb{position:absolute;top:10%;left:0;right:0;text-align:center;font-family:var(--f-type);font-weight:400;font-size:clamp(5px,.6vw,8px);letter-spacing:.06em}
+.cell.passed{background:#D9D0BC;color:#9A907E}
+.cell.passed::after{content:"✓";position:absolute;inset:16%;display:grid;place-items:center;border:2px solid var(--red);border-radius:50%;color:var(--red);font-size:clamp(11px,1.3vw,18px);transform:rotate(-12deg);opacity:.85}
+.cell.passed > *{opacity:.35}
+.cell.trap{background:#2E3138;color:var(--red-hot);box-shadow:inset 0 0 0 1.5px var(--red), 0 4px 10px rgba(0,0,0,.45)}
+.cell.trap .lb{color:var(--red-hot)}
+.cell.bonus{background:var(--sticky);color:#3A2F0B}
+.selfcheck{display:grid;gap:4px;text-align:center;margin:6px 0 2px;font-size:14px;color:var(--ink-2)}.selfcheck b{font-family:Oswald,'Arial Narrow',sans-serif;letter-spacing:.06em;text-transform:uppercase;color:var(--ink)}
+.cell.start,.cell.finish{background:var(--red);color:#fff;font-size:clamp(9px,1vw,13px);letter-spacing:.08em}
+.cell.cur{transform:rotate(0) scale(1.14);box-shadow:0 0 0 3px var(--gold), 0 10px 24px rgba(0,0,0,.6);z-index:2}
+.test .cell{cursor:pointer}
+.lens{position:absolute;height:calc(100% / 5 * .5);aspect-ratio:1;transform:translate(-50%,-50%);transition:left .32s ease, top .32s ease;z-index:4;pointer-events:none}
+.lens svg{width:100%;height:100%;overflow:visible;filter:drop-shadow(0 6px 10px rgba(0,0,0,.6))}
+.evstrip{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:6px;margin:0 0 16px}
+.evstrip > div{display:grid;grid-template-columns:auto 1fr;gap:8px;align-items:center;padding:7px 10px;border-radius:8px;background:var(--board-2);font-size:12px;line-height:1.25;color:var(--dim);min-width:0}
+.evstrip i{width:10px;height:10px;border-radius:50%;background:var(--pc)}
+.evstrip b{display:block;color:var(--chalk);font-weight:600;white-space:nowrap}
+.evstrip span{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.evstrip .now{box-shadow:inset 0 0 0 1.5px var(--gold)}
+.evstrip .got{background:#2D2A22}
+.evstrip .got b::after{content:" ✓";color:var(--gold)}
+.minibar{display:none}
+.goal{margin:0 0 16px;padding:14px 16px;border-radius:6px;background:var(--paper-2);border:1.5px solid var(--pc);position:relative}
+.goal .tl{color:var(--ink-2);font-size:11px}
+.goal p{margin:4px 0 0;font-size:15px;line-height:1.45;font-weight:500}
+.milestone{margin:0 0 16px;padding:16px 18px;border-radius:6px;background:var(--ink);color:var(--paper);position:relative;overflow:hidden}
+.milestone .tl{color:var(--gold);font-size:11px}
+.milestone h3{font-family:var(--f-head);font-size:24px;text-transform:uppercase;margin:4px 0 4px;letter-spacing:.02em;line-height:1.1}
+.milestone p{margin:0;font-size:15px;color:#D8D1C2}
+.milestone .seal{position:absolute;right:14px;top:12px;border:2.5px solid var(--gold);color:var(--gold);border-radius:50%;width:54px;height:54px;display:grid;place-items:center;font-family:var(--f-head);font-weight:700;font-size:13px;transform:rotate(-12deg);opacity:.9}
+.cert{width:100%;border-radius:4px;box-shadow:0 10px 26px rgba(0,0,0,.25);display:block}
+.rankline{display:flex;align-items:center;gap:12px;justify-content:center;flex-wrap:wrap;margin:6px 0 0}
+.rankline b{font-family:var(--f-head);font-size:22px;text-transform:uppercase;color:var(--red);letter-spacing:.03em}
+.ranks{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;width:100%;margin-top:6px}
+.ranks div{border:1.5px solid var(--paper-edge);border-radius:6px;padding:7px 4px;font-size:12px;line-height:1.25;color:var(--ink-2);background:var(--paper-2)}
+.ranks div b{display:block;font-family:var(--f-head);font-size:14px;text-transform:uppercase;color:var(--ink-2)}
+.ranks .on{border-color:var(--red);background:#F6E3DC}
+.ranks .on b{color:var(--red)}
+.newrank{background:var(--sticky);color:#2B2410;border-radius:6px;padding:10px 14px;font-weight:600;width:100%}
+.panel{background:var(--paper);color:var(--ink);border-radius:4px 12px 12px 12px;position:relative;min-width:0;min-height:420px;box-shadow:0 24px 50px rgba(0,0,0,.45)}
+.panel .pin{position:absolute;inset:0;overflow:auto;padding:clamp(20px,3vw,30px)}
+.portrait{width:150px;height:auto;flex:none;transform:rotate(3deg);box-shadow:0 8px 18px rgba(0,0,0,.3);border-radius:3px}
+.dossierbox{display:flex;gap:18px;align-items:flex-start;margin:4px 0 14px}
+.dossierbox .dossier{grid-template-columns:110px 1fr;font-size:14px;margin:0}
+.file .portrait{position:absolute;right:36px;top:92px;width:170px;transform:rotate(4deg)}
+.panel::before{content:"";position:absolute;top:-14px;left:0;width:150px;height:18px;background:var(--paper-edge);border-radius:8px 8px 0 0}
+.ph{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:16px;padding-bottom:12px;border-bottom:1.5px dashed var(--paper-edge)}
+.ph .ch{display:flex;flex-direction:column;gap:2px}
+.ph .ch small{font-family:var(--f-type);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2)}
+.ph .ch b{font-family:var(--f-head);font-size:22px;font-weight:700;text-transform:uppercase;letter-spacing:.02em;line-height:1.1;display:flex;gap:8px;align-items:center}
+.ph .ch b i{width:10px;height:10px;border-radius:50%;background:var(--pc);flex:none}
+.ph .acc{font-family:var(--f-type);font-size:12px;color:var(--ink-2);text-align:right;white-space:nowrap}
+.toast{border-left:4px solid var(--red);background:var(--paper-2);padding:10px 14px;margin-bottom:16px;font-weight:600;font-size:15px}
+.testimony{margin:0 0 14px;padding:12px 16px;background:var(--paper-2);border-left:3px solid var(--ink);font-size:16px}
+.testimony small{display:block;font-family:var(--f-type);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2);margin-bottom:3px}
+.q{font-weight:700;font-size:19px;line-height:1.35;margin:0 0 14px}
+.opts{display:grid;gap:9px}
+.opt{text-align:left;background:var(--paper-2);border:1.5px solid var(--paper-edge);border-radius:6px;padding:12px 14px;display:grid;grid-template-columns:26px 1fr;gap:12px;align-items:start;font-size:15px;line-height:1.45;color:var(--ink);transition:border-color .15s, transform .15s}
+.opt:hover:not(:disabled){border-color:var(--ink);transform:translateX(2px)}
+.opt .k{font-family:var(--f-head);font-weight:700;font-size:18px;line-height:1.2;color:var(--ink-2)}
+.opt:disabled{cursor:default}
+.opt.right{border-color:var(--ok);background:var(--ok-soft)}
+.opt.right .k{color:var(--ok)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.opt.wrong .k{color:var(--bad)}
+.opt.dim{opacity:.45}
+.opt .fb{display:block;font-size:14px;margin-top:5px;color:var(--ink-2)}
+.verdict{margin-top:14px;padding:12px 16px;font-family:var(--f-head);font-size:19px;font-weight:600;letter-spacing:.02em;text-transform:uppercase;border:2.5px solid;border-radius:6px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.verdict.ok{color:var(--ok);border-color:var(--ok)}
+.verdict.no{color:var(--bad);border-color:var(--bad)}
+.verdict span{font-family:var(--f-body);text-transform:none;font-size:14px;font-weight:500;letter-spacing:0;color:var(--ink)}
+.verdict-body{font-size:14px;margin-top:8px;color:var(--ink)}
+.pool,.answer{display:flex;flex-wrap:wrap;gap:8px}
+.pool{min-height:44px;margin-bottom:12px}
+.tok{border:1.5px solid var(--ink);background:var(--paper-2);border-radius:6px;padding:9px 12px;text-align:left;font-weight:500;font-size:15px;color:var(--ink)}
+.tok:hover:not(:disabled){background:#fff}
+.answer{flex-direction:column;flex-wrap:nowrap;counter-reset:a;min-height:56px;border:1.5px dashed var(--ink-2);border-radius:8px;padding:10px}
+.answer:empty::before{content:"Нажимайте на карточки выше по порядку";color:var(--ink-2);font-size:14px;padding:6px}
+.answer .tok{counter-increment:a;display:grid;grid-template-columns:22px 1fr auto;gap:10px;align-items:center;width:100%;border-color:var(--paper-edge)}
+.answer .tok::before{content:counter(a);font-family:var(--f-head);font-weight:700;color:var(--red)}
+.answer .tok .x{color:var(--ink-2);font-size:13px}
+.answer .tok.right{border-color:var(--ok);background:var(--ok-soft)}
+.answer .tok.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.correct-order{margin:8px 0 0;padding-left:22px;font-size:14px}
+.srt{display:grid;gap:8px}
+.srow{display:grid;gap:8px;border:1.5px solid var(--paper-edge);background:var(--paper-2);border-radius:6px;padding:10px 12px;font-size:15px}
+.srow.right{border-color:var(--ok);background:var(--ok-soft)}
+.srow.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.srow .fix{display:block;font-size:13px;color:var(--bad);margin-top:2px}
+.seg{display:flex;gap:4px;flex-wrap:wrap;justify-self:start}
+.seg button{border:1.5px solid var(--paper-edge);background:var(--paper);border-radius:6px;padding:5px 11px;font-size:13px;font-weight:600;color:var(--ink-2)}
+.seg button.on{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.seg button:disabled{cursor:default}
+.act{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:16px;flex-wrap:wrap}
+.act .link{color:var(--ink-2)}
+
+.event{margin:0 0 16px;padding:18px;border-radius:6px;position:relative}
+.event.trap{background:#2E3138;color:var(--chalk)}
+.event.bonus{background:var(--sticky);color:#2B2410}
+.event .tl{opacity:.8}
+.event h3{font-family:var(--f-head);font-size:24px;text-transform:uppercase;margin:4px 0 6px;letter-spacing:.02em;line-height:1.1}
+.event p{margin:0;font-size:15px}
+.event .rule{display:block;margin-top:10px;font-family:var(--f-type);font-size:12px;letter-spacing:.06em;opacity:.85}
+.event.trap .rule{color:#F09A92}
+
+.res{display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center}
+.res .big{font-family:var(--f-head);font-size:76px;font-weight:700;line-height:1}
+.res .big.no{color:var(--bad)}
+.res h2{font-family:var(--f-head);text-transform:uppercase;font-size:26px;margin:0}
+.res p{color:var(--ink-2);margin:0}
+.closed{position:relative;padding:10px 0 4px;width:100%;text-align:left}
+.closed .stamp{font-size:22px;padding:5px 12px;position:absolute;right:0;top:-4px;transform:rotate(-9deg)}
+.closed .tl{color:var(--ink-2)}
+.closed .nm{font-family:var(--f-head);font-weight:700;font-size:38px;text-transform:uppercase;line-height:1.05;margin:22px 0 8px}
+.closed p{font-size:16px;color:var(--ink)}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;width:100%;margin-top:14px}
+.kpis div{border:1.5px solid var(--paper-edge);background:var(--paper-2);border-radius:6px;padding:10px}
+.kpis b{display:block;font-family:var(--f-head);font-size:24px;font-weight:700}
+.kpis span{font-family:var(--f-type);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2)}
+
+.cell.lock{background:#3D4B5E;color:#E9E4D8}
+.cell.lock .lb{color:#B9C6D8}
+.cell.fact{background:#D5DEE8;color:#22324A}
+.cell.gate{background:#7E1F1A;color:#F3D9C9;border-radius:50%;box-shadow:inset 0 0 0 3px #A82B23, 0 4px 10px rgba(0,0,0,.5)}
+.cell.gate::before{display:none}
+.cell.lock span:not(.lb):not(.no),.cell.fact span:not(.lb):not(.no),.cell.gate span:not(.lb):not(.no){font-size:clamp(8px,.95vw,13px);letter-spacing:.06em}
+.event.lockcard{background:#3D4B5E;color:#E9E4D8}
+.event.gatecard{background:#7E1F1A;color:#F6E6DC}
+.event.factcard{background:#D5DEE8;color:#22324A}
+.codeform{display:grid;gap:8px;margin-top:4px}
+.codeform label{font-family:var(--f-type);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2)}
+.codeform .row{display:flex;gap:8px;flex-wrap:wrap}
+.codeform input{flex:1 1 180px;min-width:0;font:inherit;font-size:18px;font-weight:600;letter-spacing:.04em;padding:11px 14px;border:1.5px solid var(--ink);border-radius:6px;background:var(--paper-2);color:var(--ink)}
+.codeform input:focus{outline:none;border-color:var(--red)}
+.formerr{color:var(--bad);font-size:14px;font-weight:600}
+.testhint{font-family:var(--f-type);font-size:12px;color:#8A6D1E;background:#F4E7B8;border-radius:4px;padding:6px 10px;margin-top:8px}
+.dayhead{margin:10px 0 2px;color:var(--gold)}
+.chapters .dayhead:first-child{margin-top:0}
+@media (max-width:940px){
+  .game,.intro{grid-template-columns:1fr}
+  .panel{min-height:0}
+  .panel .pin{position:static;overflow:visible}
+  .board{width:100%}
+  .minibar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;background:var(--board);border-radius:12px;padding:10px 14px;box-shadow:inset 0 0 0 1px var(--line)}
+  .minibar .mt{flex:1 1 160px;min-width:0;font-size:14px}
+  .minibar .mt b{display:block;font-family:var(--f-head);text-transform:uppercase;font-size:16px;letter-spacing:.02em}
+  .minibar .bar{height:6px;border-radius:3px;background:var(--line);margin-top:6px;overflow:hidden}
+  .minibar .bar i{display:block;height:100%;background:var(--red-hot)}
+  .minibar .link{color:var(--gold);font-size:14px}
+  .boardbox{display:none}
+  .boardbox.open{display:block}
+  .evstrip{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media (max-width:560px){
+  .boardbox{padding:8px}
+  .cell .no,.cell .lb{display:none}
+  .cell{height:84%}
+  .board{min-height:0}
+  .evstrip span{display:none}
+  .evstrip > div{padding:6px 8px;font-size:12px;gap:6px}
+  .evstrip i{width:8px;height:8px}
+  .bhead h2{font-size:20px}
+  .dossier{grid-template-columns:90px 1fr}
+  .file .portrait{position:static;width:130px;margin:0 0 14px;display:block}
+  .dossierbox{flex-direction:column}
+  .dossierbox .portrait{width:130px}
+  .file .stamp{top:16px;right:16px;font-size:12px}
+  .closed .nm{font-size:30px;max-width:100%}
+  .closed .stamp{position:static;display:inline-block;margin-bottom:8px}
+}
+@media (prefers-reduced-motion:reduce){ *{transition:none !important} }
+</style>
+
+<div class="wrap" id="app"></div>
+
+<script>
+/* ================= БАНК ЗАДАНИЙ «ДЕЛО № 127» =================
+   C(вопрос, реплика клиента или null, [[верный вариант, пояснение], [неверный, пояснение], ...])
+   — первый вариант всегда верный, на экране варианты перемешиваются.
+   O(вопрос, [шаги в правильном порядке])
+   S(вопрос, [корзины], [[утверждение, номер корзины с 0], ...])                         */
+const C = (q, client, opts) => ({ type: 'choice', q, client, opts: opts.map(([t, f], i) => ({ t, f, ok: i === 0 })) });
+const O = (q, items) => ({ type: 'order', q, items });
+const S = (q, buckets, items) => ({ type: 'sort', q, buckets, items });
+const G = (g, t) => Object.assign(t, { g });
+const L = (l, t) => Object.assign(t, { l }); // шаг внутри главы: 1 — инструмент, 2 — пример, 3 — кейс // группа: за прохождение выпадает один вопрос из группы
+
+const STAGES = [
+/* ------------------------------------------------------------ 1 */
+{ id: 1, title: 'Подготовка', chapter: 'План расследования', tasks: [
+  C('Какая главная задача менеджера по продажам в «Белом маркере»?', null, [
+    ['Помочь клиенту найти законный выход из долгов и решиться на него', 'Менеджер ведёт клиента к решению, а не просто продаёт или консультирует.'],
+    ['Продать услугу как можно быстрее, пока клиент ещё на линии', 'Спешка и давление оборачиваются отказами и неоплаченными счетами.'],
+    ['Ответить на вопросы клиента, а решение полностью оставить ему', 'Человеку в стрессе сложно решиться одному. Наша задача — помочь ему сделать шаг.'],
+  ]),
+  O('Расставьте этапы взаимодействия с клиентом по порядку.', ['Подготовка', 'Установление контакта', 'Выявление потребностей', 'Презентация', 'Работа с возражениями', 'Завершение сделки']),
+  C('Как понять, что разговор с клиентом прошёл хорошо?', null, [
+    ['Клиенту стало спокойнее, и он понимает, какой следующий шаг', 'Это ощущение и возвращает клиента к нам, даже если договор подписан не сразу.'],
+    ['Вы успели рассказать клиенту обо всех услугах компании', 'Количество информации не равно пользе для клиента.'],
+    ['Клиент согласился на всё, лишь бы скорее закончить звонок', 'Такое «да» обычно превращается в неоплаченный счёт.'],
+  ]),
+  G('prep', S('Разложите действия: это техническая или моральная подготовка?', ['Техническая', 'Моральная'], [['План работы на день', 0], ['Открыть CRM и шпаргалку по процедуре', 0], ['Отрепетировать речевые модули', 0], ['Настроиться на результат', 1], ['Вспомнить свою историю успеха', 1], ['Напомнить себе, какую роль я выполняю', 1]])),
+  C('Менеджер говорит коллеге: «Ну не знаю… банкротство же клеймо на всю жизнь». Какая из трёх вер у него пошатнулась?', null, [
+    ['Вера в продукт', 'Если менеджер сам сомневается в процедуре, клиент это услышит. Помогают реальные истории клиентов и разбор с юристом.'],
+    ['Вера в компанию', 'Сомнение не про компанию, а про саму процедуру банкротства.'],
+    ['Вера в себя', 'Он не сомневается в своих навыках. Он сомневается в пользе продукта.'],
+  ]),
+  G('prep', C('Менеджер звонит без плана и ищет историю клиента в CRM прямо во время разговора. Какой подготовки не хватило?', null, [
+    ['Технической', 'CRM, шпаргалки и план нужно открыть до звонка. Паузы и щелчки мыши клиент слышит.'],
+    ['Моральной', 'Дело не в настрое, а в том, что под рукой не было информации.'],
+    ['Никакой: так делают все', 'Клиент слышит паузы и решает, что его не помнят. Это подрывает доверие.'],
+  ])),
+  C('Как укрепить веру в продукт?', null, [
+    ['Послушать истории клиентов, у которых процедура завершилась', 'Реальные результаты лучше всего снимают собственные сомнения.'],
+    ['Выучить скрипт наизусть, чтобы звучать максимально уверенно', 'Скрипт помогает говорить, но не даёт уверенности, что продукт работает.'],
+    ['Не думать о сомнениях и просто делать как можно больше звонков', 'Сомнения никуда не денутся, и клиент их услышит.'],
+  ]),
+  S('В чём ценность менеджера по продажам? Отметьте «да» или «нет».', ['Да', 'Нет'], [['Экспертность в вопросах банкротства', 0], ['Рекомендация решения под ситуацию клиента', 0], ['Поддержка клиента на пути к решению', 0], ['Давление «решайте сейчас или никогда»', 1], ['Обещания того, что от нас не зависит', 1], ['Навязывание ненужной услуги', 1]]),
+  G('prep', C('Что относится к технической подготовке?', null, [
+    ['Открыть CRM и шпаргалку по процедуре', 'Всё под рукой, и вы не тратите время клиента на поиски.'],
+    ['Вспомнить свою последнюю историю успеха', 'Это моральная подготовка.'],
+    ['Настроиться на результат рабочего дня', 'Это моральная подготовка.'],
+  ])),
+]},
+/* ------------------------------------------------------------ 2 */
+{ id: 2, title: 'Установление контакта', chapter: 'Первая встреча', tasks: [
+  G('stages2', O('Расставьте этапы установления контакта по порядку.', ['Приветствие', 'Представление', 'Инфоповод', 'Программирование'])),
+  C('Какой инфоповод построен правильно?', null, [
+    ['«Ирина, у нас запустилась рассрочка на 16 месяцев, и я сразу вспомнила про вас. Как сейчас дела с платежами?»', 'Повод личный и полезный, а вопрос в конце вовлекает в диалог.'],
+    ['«Ирина, добрый день! У нас появилась рассрочка на 16 месяцев. Звоню, чтобы просто сообщить вам эту хорошую новость».', 'Нет вопроса, и разговор обрывается на информировании.'],
+    ['«Ирина, добрый день! Звоню узнать, вы ещё думаете над нашим предложением или уже, наверное, нет?»', 'Нет повода, а на вопрос легко ответить «нет».'],
+  ]),
+  C('Для чего в диалоге нужны техники активного слушания («Правильно ли я понимаю…», «Итак, если обобщить…», «Поясните, пожалуйста…»)?', null, [
+    ['Чтобы клиент чувствовал, что его слышат, а вы точно поняли ситуацию', 'Клиент раскрывается больше, а вы не строите презентацию на догадках.'],
+    ['Чтобы заполнить паузы и выиграть время подумать над ответом', 'Это не заполнитель пауз, а способ понять клиента.'],
+    ['Чтобы разговор звучал строго по скрипту и выглядел профессионально', 'Дело не в звучании, а в том, чтобы клиент почувствовал, что его услышали.'],
+  ]),
+  C('Клиент раздражён. Как лучше начать?', 'Мне уже десятый раз за день звонят какие-то юристы!', [
+    ['Понимаю, звонков правда много. Я Анна, вы интересовались списанием долгов. Займу пять минут и скажу, подходит ли вам процедура?', 'Присоединились к эмоции, напомнили повод и запрограммировали короткий разговор.'],
+    ['Мы не «какие-то юристы», мы лучшая компания в городе! Сейчас я быстро расскажу, чем мы отличаемся от всех остальных компаний.', 'Спор с клиентом в первые секунды закрывает контакт.'],
+    ['Извините за беспокойство. Тогда не буду тратить ваше время и сразу назову стоимость и условия рассрочки.', 'Без контакта и вопросов цена звучит в пустоту.'],
+  ]),
+  C('Почему интонация так важна в первые секунды разговора?', null, [
+    ['По голосу клиент решает, доверять ли вам, ещё до сути разговора', 'Доброжелательный тон открывает разговор раньше любых аргументов.'],
+    ['Интонация не так важна, главное — правильные слова из скрипта', 'Те же слова холодным тоном звучат как очередной звонок из банка.'],
+    ['Интонация важна, только когда клиент уже раздражён или расстроен', 'Она важна всегда: первое впечатление складывается с первых слов.'],
+  ]),
+  G('name', C('Для чего обращаться к клиенту по имени?', null, [
+    ['Чтобы разговор стал личным и клиент почувствовал внимание к себе', 'Человек слышит, что говорят с ним, а не с «очередным должником из базы».'],
+    ['Чтобы клиент запомнил, что ему звонят именно из нашей компании', 'Имя клиента работает на отношение к разговору, а не на запоминание компании.'],
+    ['Чтобы проверить, правильно ли записаны данные клиента в CRM', 'Это можно уточнить отдельно. Имя нужно, чтобы разговор стал личным.'],
+  ])),
+  G('stages2', O('Соберите начало звонка из фрагментов.', ['«Добрый день!»', '«Меня зовут Анна, компания «Белый маркер».»', '«Вы интересовались списанием долгов, и я звоню помочь разобраться. Расскажете, что сейчас происходит?»', '«Предлагаю так: задам пару вопросов, потом расскажу, чем можем помочь. Хорошо?»'])),
+  C('Какая фраза — программирование?', null, [
+    ['«Предлагаю так: задам пару вопросов, потом расскажу о вариантах. Хорошо?»', 'Клиент знает, как пойдёт разговор, и соглашается на сценарий.'],
+    ['«Добрый день! Меня зовут Анна, я из компании «Белый маркер».»', 'Это приветствие и представление.'],
+    ['«Скоро праздники, и так хочется встретить их спокойно, без всяких долгов».', 'Это инфоповод.'],
+  ]),
+  C('Как ответить?', 'Кто это? Откуда у вас мой номер?', [
+    ['Добрый день! Меня зовут Анна, «Белый маркер». Вы интересовались списанием долгов. У вас же есть долги сейчас?', 'Приветствие, представление и понятный повод, а вопрос сразу возвращает к теме.'],
+    ['Это сейчас не так важно. Главное, что мы можем помочь вам избавиться от долгов. Хотите узнать, как это работает?', 'Уход от ответа усиливает подозрения.'],
+    ['Мы юридическая компания, у нас сейчас действуют скидки на банкротство. Рассказать подробнее про все условия?', 'Нет представления и повода, звучит как спам.'],
+  ]),
+  G('name', C('Как обращаться к клиентке дальше?', 'Слушаю. Ольга Ивановна.', [
+    ['«Ольга Ивановна», как она представилась сама', 'Клиент сам подсказал, как к нему обращаться. Запишите это в CRM.'],
+    ['«Оля», чтобы разговор звучал теплее и дружелюбнее', 'Фамильярность без разрешения отталкивает.'],
+    ['Никак, просто обращаться к ней на «вы»', 'Имя делает разговор личным, им стоит пользоваться.'],
+  ])),
+]},
+/* ------------------------------------------------------------ 3 */
+{ id: 3, title: 'Выявление потребностей', chapter: 'Мотив', tasks: [
+  S('Определите тип вопроса.', ['Открытый', 'Альтернативный', 'Закрытый'], [['Расскажите, как сейчас обстоят дела с кредитами?', 0], ['Что для вас сейчас самое тяжёлое в этой ситуации?', 0], ['Приставы уже удерживают из зарплаты или пока только звонки?', 1], ['Вам удобнее созвониться утром или вечером?', 1], ['Квартира в собственности?', 2], ['Общая сумма долга около 800 тысяч, верно?', 2]]),
+  O('В каком порядке задаём вопросы по воронке?', ['Открытые', 'Альтернативные', 'Закрытые']),
+  C('Как ответить?', 'А зачем вам знать про мою зарплату и машину? Это вообще-то личное.', [
+    ['Понимаю, вопросы личные. Они нужны, чтобы понять, какая процедура вам подходит и что из имущества останется за вами.', 'Вы объяснили, для чего информация. Опрос, а не допрос.'],
+    ['Таков порядок компании: без этих данных мы не сможем продолжить консультацию. Ответьте, пожалуйста, на все вопросы.', 'Формальный ответ звучит как допрос и усиливает тревогу.'],
+    ['Хорошо, это не обязательно. Давайте пропустим эти вопросы, и я сразу расскажу вам о стоимости наших услуг.', 'Без этих данных вы не подберёте решение и не ответите на главные страхи клиента.'],
+  ]),
+  C('Какой вопрос относится к «вредным»?', null, [
+    ['«Вы раньше интересовались банкротством. Сейчас это ещё актуально?»', 'Интуитивный ответ «уже нет» закрывает разговор. Лучше спросить, что изменилось.'],
+    ['«Что изменилось в вашей ситуации с момента нашего прошлого разговора?»', 'Хороший открытый вопрос: клиент рассказывает о ситуации.'],
+    ['«Что для вас сейчас важнее всего решить в первую очередь?»', 'Хороший вопрос: он выявляет главную потребность.'],
+  ]),
+  C('Зачем выяснять, что побудило клиента обратиться именно сейчас?', null, [
+    ['Это его главная боль: на неё мы опираемся до конца разговора', 'Причина «почему сейчас» — катализатор. К ней вы вернётесь в презентации, в возражениях и при завершении.'],
+    ['Чтобы заполнить все поля в CRM и ничего не упустить из виду', 'CRM важна, но вопрос нужен не для анкеты, а чтобы управлять разговором.'],
+    ['Чтобы понять, насколько давно клиент думает о банкротстве', 'Срок сам по себе мало что даёт. Важно, что подтолкнуло клиента сейчас.'],
+  ]),
+  C('Какое резюмирование составлено лучше?', null, [
+    ['«Давайте сверимся: долг около 1,2 млн, удерживают половину зарплаты. Вам важно сохранить квартиру. Верно?»', 'Факты, цели клиента и проверочный вопрос в конце.'],
+    ['«Ну, в целом ситуация понятна. Давайте я теперь расскажу вам про наши тарифы и условия работы».', 'Это не резюме: нет ни фактов, ни проверки понимания.'],
+    ['«Итак, насколько я понимаю, вам нужно банкротство. Тогда давайте обсудим, как его лучше и быстрее оформить».', 'Слишком общо: клиент не слышит, что его поняли.'],
+  ]),
+  S('Определите тип вопроса.', ['Открытый', 'Альтернативный', 'Закрытый'], [['Как долги влияют на вашу жизнь сейчас?', 0], ['Что вы уже пробовали сделать, чтобы решить вопрос?', 0], ['Долг больше по кредитам или по микрозаймам?', 1], ['Вы работаете официально или неофициально?', 1], ['У вас есть автомобиль?', 2], ['Просрочка больше трёх месяцев?', 2]]),
+  C('С какого вопроса лучше начать выявление потребностей?', null, [
+    ['«Расскажите, что сейчас происходит с вашими долгами?»', 'Открытый вопрос даёт клиенту рассказать о ситуации своими словами.'],
+    ['«Скажите, общая сумма вашего долга больше 500 тысяч?»', 'Закрытые вопросы оставляем на конец воронки, для уточнений.'],
+    ['«Вы уже готовы заключить с нами договор сегодня?»', 'Рано: вы ещё не знаете ситуацию клиента.'],
+  ]),
+  C('Как ответить?', 'Ой, давайте без подробностей. Просто скажите, сколько стоит.', [
+    ['Обязательно скажу. Цена зависит от сложности ситуации: задам три ключевых вопроса и назову сумму. Хорошо?', 'Объяснили, для чего вопросы, и пообещали ответ. Опрос, а не допрос.'],
+    ['Где-то от ста до трёхсот тысяч, точнее прямо сейчас не скажу. Всё зависит от того, как дальше пойдёт ваше дело в суде.', 'Цена без контекста почти всегда звучит как «дорого».'],
+    ['Без подробностей я ничего не смогу сказать. Сначала нужно пройти полную консультацию с нашим юристом.', 'Звучит как отказ. Объясните, зачем нужны вопросы.'],
+  ]),
+  C('Какой вопрос относится к «вредным»?', null, [
+    ['«Я правильно понимаю, что вас останавливает только цена?»', 'Ответ «да» загоняет в тупик, если более дешёвого варианта нет.'],
+    ['«Что для вас особенно важно при выборе юристов по банкротству?»', 'Хороший открытый вопрос.'],
+    ['«Какой результат вы хотите получить в итоге?»', 'Хороший вопрос о целях клиента.'],
+  ]),
+  C('Какой вопрос задать дальше?', 'Долги у меня уже года три, как-то справлялась.', [
+    ['«А что случилось сейчас, что вы решили обратиться за консультацией?»', 'Вы выясняете катализатор: что подтолкнуло клиента именно сейчас.'],
+    ['«Понятно. А какая общая сумма долга получается по всем кредитам?»', 'Сумма важна, но так вы пропускаете главное — почему клиент пришёл сейчас.'],
+    ['«Раз справлялись, может, стоит ещё немного подождать с процедурой?»', 'Вы сами отговариваете клиента и закрываете разговор.'],
+  ]),
+  C('Зачем нужно резюмирование?', null, [
+    ['Проверить, что вы верно поняли друг друга', 'Клиент слышит, что его поняли, а вы строите на резюме презентацию.'],
+    ['Заполнить паузу перед рассказом о тарифах', 'Резюме — инструмент, а не заполнитель паузы.'],
+    ['Показать клиенту, как много вы запомнили', 'Цель не в демонстрации памяти, а в проверке понимания.'],
+  ]),
+]},
+/* ------------------------------------------------------------ 4 */
+{ id: 4, title: 'Презентация', chapter: 'Версия', tasks: [
+  L(1, C('На чём строится презентация?', null, [
+    ['На потребностях и боли, которые клиент назвал при выявлении', 'Клиент слышит решение своей проблемы, а не рекламу.'],
+    ['На полном списке услуг и преимуществ нашей компании', 'Список услуг — про нас. Клиенту важно, что изменится у него.'],
+    ['На тарифах и условиях рассрочки, чтобы сразу назвать цену', 'Цена без ценности звучит как «дорого».'],
+  ])),
+  L(1, C('Зачем переводить свойство услуги в выгоду для клиента?', null, [
+    ['Клиенту важно не что у нас есть, а что изменится в его жизни', 'Выгода отвечает на вопрос клиента «а мне это зачем?».'],
+    ['Чтобы презентация звучала дольше, солиднее и убедительнее', 'Длина не делает презентацию убедительной.'],
+    ['Чтобы не называть клиенту стоимость услуг слишком рано', 'Выгода нужна не для того, чтобы оттянуть разговор о цене.'],
+  ])),
+  L(2, G('sound', S('Как звучит фраза для клиента?', ['Звучит выгодно', 'Звучит невыгодно'], [['«Вам не придётся ходить в суд: вас представит юрист»', 0], ['«Вы в любой момент будете знать, на каком этапе дело»', 0], ['«Звонки коллекторов прекратятся, и вы спокойно работаете»', 0], ['«У нас есть услуга представительства в суде»', 1], ['«Мы работаем на рынке уже много лет»', 1], ['«У нас в штате двадцать опытных юристов»', 1]]))),
+  L(2, G('sound', S('Как звучит фраза для клиента?', ['Звучит выгодно', 'Звучит невыгодно'], [['«Вы всегда сможете задать вопрос и получить ответ»', 0], ['«Вы начнёте процедуру сразу, не откладывая на месяцы»', 0], ['«Вам не нужно самому собирать документы»', 0], ['«Мы предоставляем полное сопровождение процедуры»', 1], ['«У нас есть рассрочка на 16 месяцев»', 1], ['«Мы сами собираем все документы»', 1]]))),
+  L(2, C('Что из этого выгода, а не свойство?', null, [
+    ['Вы перестанете общаться с коллекторами: всё пойдёт через суд', 'Это то, что меняется в жизни клиента.'],
+    ['Сопровождение опытным юристом на всех этапах процедуры банкротства', 'Это свойство услуги. Нужна выгода: что это даёт клиенту.'],
+    ['Рассрочка оплаты услуг на 16 месяцев с первого же дня', 'Это свойство. Выгода: «можно начать уже сейчас».'],
+  ])),
+  L(2, G('sv', O('Соберите фразу «свойство — выгода».', ['«Ваше дело ведёт персональный юрист,»', '«благодаря этому»', '«вам не придётся самому ходить в суд и разбираться с банками.»', '«Это же то, что для вас важно?»']))),
+  L(2, G('sv', O('Соберите фразу «свойство — выгода».', ['«Оплату можно разбить на рассрочку,»', '«благодаря этому»', '«вы начнёте процедуру уже сейчас, не откладывая на месяцы.»', '«Согласитесь, это удобно?»']))),
+  L(2, G('fb', C('Какой вопрос лучше подходит, чтобы получить обратную связь от клиента после презентации?', null, [
+    ['«Что из этого для вас сейчас самое важное?»', 'Открытый вопрос показывает, что зацепило клиента.'],
+    ['«В целом всё понятно, вопросов у вас нет?»', 'Скорее всего, ответят «да», и вы ничего не узнаете.'],
+    ['«Ну что, будем сегодня оформлять с вами договор?»', 'Это давление, а не обратная связь.'],
+  ]))),
+  L(2, G('fb', C('Какой вопрос лучше, чтобы получить обратную связь от клиента?', null, [
+    ['«Что думаете о таком варианте?»', 'Открытый вопрос показывает реакцию клиента.'],
+    ['«Я ведь понятно объясняю, правда?»', 'Скорее всего, ответят «да», и вы ничего не узнаете.'],
+    ['«Возражений у вас нет, да?»', 'Закрытый вопрос с подсказкой: клиент скажет «нет», и вы ничего не узнаете.'],
+  ]))),
+  L(3, C('Какая презентация попадает в потребность?', 'Меня больше всего достали звонки. Коллекторы звонят даже на работу, начальник уже косо смотрит.', [
+    ['Когда суд введёт процедуру, кредиторы будут общаться через суд. Звонки на работу прекратятся. Это же то, что для вас важно, верно?', 'Говорите о его боли и заканчиваете вопросом на согласие.'],
+    ['Мы гарантируем: спишем 100% ваших долгов, и вы навсегда забудете о звонках, о коллекторах и о приставах тоже, обещаю!', 'Нельзя обещать гарантированный результат: решение принимает суд.'],
+    ['У нас очень опытные юристы и сотни выигранных дел. Давайте я подробно расскажу вам про наши тарифы, скидки и рассрочку.', 'Ни слова о звонках, которые для клиента главное.'],
+  ])),
+  L(3, C('Какая презентация попадает в потребность?', 'У меня совсем нет времени разбираться с бумагами. Я работаю с утра до вечера.', [
+    ['Документы соберёт ваш юрист, от вас нужны только подписи. Благодаря этому время останется на семью и работу. Согласитесь, это удобно?', 'Вы говорите о его боли: нехватке времени.'],
+    ['Не волнуйтесь, мы гарантируем списание всех долгов уже за два месяца, и бумаги вас вообще никак не коснутся, это я вам обещаю!', 'Гарантий и таких сроков мы дать не можем. Решение принимает суд.'],
+    ['Понимаю вас. Зато у нас самые низкие цены в нашем городе, и это точно сэкономит вам и деньги, и силы, и нервы, и время.', 'Клиент говорил про время, а не про цену.'],
+  ])),
+  L(3, C('Какая презентация попадает в потребность?', 'Больше всего боюсь, что узнают на работе и соседи.', [
+    ['Понимаю. Давайте честно расскажу, кто и в каком случае узнает о процедуре, а кто нет. Это же то, что для вас важно?', 'Вы услышали страх и отвечаете на него честно, без обещаний.'],
+    ['Не переживайте, о процедуре вообще никто и никогда не узнает, это я вам гарантирую на сто процентов!', 'Обещание, которое легко проверить и опровергнуть, разрушает доверие.'],
+    ['Это сейчас не так важно. Главное, что мы спишем долги, а остальное со временем уже само забудется.', 'Вы обесценили главный страх клиента.'],
+  ])),
+]},
+/* ------------------------------------------------------------ 5 */
+{ id: 5, title: 'Работа с возражениями', chapter: 'Алиби', tasks: [
+  S('Разложите реакции на возражения.', ['Эффективная', 'Неэффективная'], [['Спокойный уверенный голос', 0], ['«Спасибо, что сказали прямо»', 0], ['«Понимаю ваши сомнения»', 0], ['Перебить, чтобы быстрее ответить', 1], ['«Вы не правы, это не дорого»', 1], ['Сделать вид, что не услышали', 1]]),
+  O('Расставьте шаги алгоритма работы с возражениями.', ['Согласиться с эмоцией клиента', 'Задать вопрос на истинность', 'Привести аргументы с учётом болей и целей', 'Призвать к действию']),
+  C('Как присоединиться к возражению ниже?', 'Ну это дорого для меня. У меня и так долгов полно.', [
+    ['Понимаю, когда долги давят, каждая сумма ощущается особенно остро.', 'Присоединились к эмоции, без спора и оправданий.'],
+    ['Это совсем не дорого, у конкурентов цены ещё выше, можете проверить.', 'Спор с клиентом. Он почувствует, что его не слышат.'],
+    ['Хорошо, тогда перезвоните мне, когда появятся свободные деньги.', 'Это отказ от работы с возражением.'],
+  ]),
+  C('Какой уточняющий вопрос больше подходит к возражению ниже?', 'Мне надо с женой посоветоваться.', [
+    ['А если бы решение принимали только вы, что бы выбрали?', 'Вопрос показывает, есть ли у клиента своё мнение и какие сомнения остались.'],
+    ['А вы сами разве не можете решить такой простой вопрос?', 'Звучит как упрёк и вызывает защиту.'],
+    ['Хорошо, а когда примерно вы сможете с ней поговорить?', 'Вы сразу соглашаетесь отложить решение, не узнав, что за возражением.'],
+  ]),
+  C('Какой вариант лучше всего отражает присоединение и уточнение на возражение?', 'Я боюсь, что у меня всё заберут. Квартиру, машину…', [
+    ['Понимаю, это частый страх. Единственное жильё не в ипотеке не забирают, а машина — по ситуации. Что у вас в собственности?', 'Присоединение, честная информация и вопрос, который продолжает диалог.'],
+    ['Не волнуйтесь, у наших клиентов никогда и ничего не забирают, это я вам гарантирую. Можно спокойно начинать.', 'Это неправда, и клиент может это проверить. Такие обещания разрушают доверие.'],
+    ['Ну, тут без потерь никак не обойтись: что-то, скорее всего, заберут. Зато все долги спишут, а это ведь главное, согласитесь?', 'Вы подтвердили страх, не разобравшись в ситуации.'],
+  ]),
+  C('Что чаще всего стоит за этой фразой?', 'Я подумаю.', [
+    ['У клиента остались незакрытые вопросы', 'Задача — бережно выяснить, какие именно, и ответить на них.'],
+    ['Клиент точно ничего уже не купит', 'Не точно. Это сигнал, что работа не закончена.'],
+    ['Клиенту всё понятно, нужно лишь время', 'Иногда так, но чаще за «подумаю» стоит конкретное сомнение.'],
+  ]),
+  S('Разложите реакции на возражения.', ['Эффективная', 'Неэффективная'], [['«Хороший вопрос, давайте разберёмся»', 0], ['Выслушать до конца', 0], ['«Знаете, многие мои клиенты поначалу так говорили»', 0], ['Обидеться и замолчать', 1], ['«Это вы зря так думаете»', 1], ['Перейти к другой теме, будто ничего не было', 1]]),
+  C('Зачем нужен шаг 2 — вопрос на истинность?', null, [
+    ['Понять, в чём настоящая причина возражения', 'За «дорого» часто стоит недоверие или страх. Отрабатывать нужно настоящую причину.'],
+    ['Показать клиенту, что он в чём-то не прав', 'Цель не переспорить, а понять.'],
+    ['Выиграть время, чтобы придумать ответ', 'Вопрос задаётся, чтобы получить информацию.'],
+  ]),
+  C('Какой вариант лучше всего отражает присоединение и уточнение на возражение?', 'Мне надо подумать.', [
+    ['Конечно, решение серьёзное. Скажите, что именно хочется обдумать: условия, стоимость или саму процедуру?', 'Присоединение и вопрос, который выявляет настоящее сомнение.'],
+    ['Хорошо, думайте сколько нужно. Я перезвоню вам примерно через неделю, и тогда мы всё спокойно обсудим.', 'Возражение не отработано, и клиент может уйти к другим.'],
+    ['А что тут думать? Я же вам всё подробно объяснила, ситуация понятная, нужно просто начинать процедуру сегодня.', 'Обесценивание позиции клиента.'],
+  ]),
+  C('Какой ответ снимает недоверие?', 'А вдруг вы мошенники? Сейчас кругом обман.', [
+    ['Понимаю, осторожность правильная. Пришлю договор и реквизиты, а встретиться можно у нас в офисе. Когда удобно?', 'Присоединение, проверяемые аргументы и конкретный шаг.'],
+    ['Да вы что, мы абсолютно честная и надёжная компания! Как вы вообще могли такое подумать после нашего разговора?', 'Эмоциональное «мы честные» ничего не доказывает.'],
+    ['Ну, если не доверяете, то я не буду вас уговаривать. Захотите — сами позвоните, номер у вас есть.', 'Вы потеряли клиента.'],
+  ]),
+  C('Какая причина возражения, скорее всего, стоит за этим?', 'Сейчас не до этого. Потом как-нибудь.', [
+    ['Нет понимания ценности', 'Клиент не видит, что даст ему процедура сейчас. Помогают истории о том, чем оборачивается откладывание: проценты, пени, аресты.'],
+    ['Нет денег на услуги', 'О деньгах клиент не говорит.'],
+    ['Нет доверия к нам', 'Сомнения в компании здесь не звучат.'],
+  ]),
+  O('Расставьте реплики по шагам: возражение «Надо посоветоваться с мужем».', ['«Понимаю, такие решения лучше принимать вместе».', '«А если бы решали только вы, какой вариант выбрали бы?»', '«Да, рассрочка вам правда подходит: можно начать сразу, и удержания скоро прекратятся».', '«Давайте созвонимся завтра втроём, и я отвечу на все вопросы мужа».']),
+]},
+/* ------------------------------------------------------------ 6 */
+{ id: 6, title: 'Завершение сделки', chapter: 'Развязка', tasks: [
+  L(1, O('Расставьте шаги алгоритма завершения сделки.', ['Помочь принять решение', 'Оформить сделку и выставить счёт', 'Рассказать о дальнейших шагах', 'Поблагодарить и попрощаться'])),
+  L(1, C('Кто управляет завершением сделки?', null, [
+    ['Менеджер: он ведёт клиента к решению и предлагает следующий шаг', 'Активная позиция: вы не ждёте, пока клиент «созреет», а помогаете ему решиться.'],
+    ['Клиент: он сам решит, когда будет готов оформить сделку с нами', 'Человеку в стрессе сложно решиться одному. Без вашей помощи решение откладывается.'],
+    ['Никто: если презентация хорошая, клиент сам попросит договор', 'Даже после отличной презентации клиенту нужен ваш понятный следующий шаг.'],
+  ])),
+  L(1, C('На чём строить аргумент, почему решение не стоит откладывать?', null, [
+    ['На боли и ситуации клиента: что будет происходить, пока он ждёт', 'Удержания, пени, звонки — клиент видит цену промедления в своей жизни.'],
+    ['На том, что скоро закончится акция и места в работе тоже закончатся', 'Выдуманный дефицит не связан с проблемой клиента и подрывает доверие.'],
+    ['На том, что менеджеру важно выполнить план продаж до конца месяца', 'План — ваша задача, а не причина для клиента.'],
+  ])),
+  L(1, C('Что важно проговорить в конце разговора?', null, [
+    ['Резюме выгод и следующих шагов со сроками', 'Клиент уходит с понятным планом.'],
+    ['Историю компании и отзывы довольных клиентов', 'Это не помогает перейти к действию.'],
+    ['Ничего: клиент и так всё хорошо запомнил', 'Без резюме договорённости часто теряются.'],
+  ])),
+  L(1, C('Договорились о повторном звонке. Что важно?', null, [
+    ['Клиент понимает, зачем следующий звонок, и знает время', 'Например: «Завтра с 15 до 16 созвонимся, после того как вы обсудите рассрочку с супругой».'],
+    ['Достаточно сказать клиенту «я вам перезвоню попозже»', 'Без цели и времени повторный звонок превращается в холодный.'],
+    ['Отправить предложение и ждать, пока клиент напишет сам', 'Инициатива уходит от вас, и клиент часто пропадает.'],
+  ])),
+  L(2, S('Вы ведёте клиента к активации. Что помогает, а что мешает?', ['Помогает', 'Мешает'], [['Перезванивать в оговорённый срок', 0], ['Быть доброжелательным в любой ситуации', 0], ['Напоминать, ради чего клиент решил начать', 0], ['Пропадать, пока клиент «думает»', 1], ['Обижаться на резкость или отказ', 1], ['Торопить и давить без причины', 1]])),
+  L(2, C('Какая фраза показывает активную позицию менеджера?', null, [
+    ['«Вы говорили, что удержания сильно бьют по бюджету. Чем раньше начнём, тем раньше это прекратится. Оформляем?»', 'Вы бережно ведёте к решению и опираетесь на боль, которую назвал сам клиент.'],
+    ['«Подумайте спокойно, сколько вам нужно, и перезвоните мне сами, когда будете полностью готовы к решению».', 'Инициатива уходит к клиенту, и решение откладывается.'],
+    ['«Осталось последнее место на этот месяц, поэтому лучше решать прямо сейчас, пока его не заняли другие».', 'Давление выдуманным дефицитом вместо аргумента из ситуации клиента.'],
+  ])),
+  L(2, O('Расставьте реплики по алгоритму завершения сделки.', ['«Тогда оформляем с рассрочкой?»', '«Отправляю вам договор оферты и ссылку на оплату».', '«Дальше с вами свяжется досудебный отдел: проведёт анкетирование и поможет собрать документы».', '«Спасибо за доверие, хорошего вечера!»'])),
+  L(3, C('Клиент почти готов. Что сказать?', 'Ну, в целом мне всё понятно и всё нравится.', [
+    ['Отлично! Тогда оформляем. Вам удобнее оплатить сразу или в рассрочку?', 'Вы помогли принять решение и сразу дали удобный выбор.'],
+    ['Хорошо, тогда подумайте спокойно и перезвоните мне, когда решите.', 'Клиент готов, а вы отправляете его «думать». Момент упущен.'],
+    ['Отлично! Тогда расскажу вам ещё о нашей истории, наградах и команде.', 'Лишняя презентация после согласия может породить новые сомнения.'],
+  ])),
+  L(3, C('Как ответить?', 'Я бы сначала хотел задать вопросы юристу.', [
+    ['Конечно, спрашивайте. Я консультирую по закону о банкротстве, а сложные моменты уточню у юристов и сразу вернусь. Что хотите узнать?', 'Вы остаётесь экспертом для клиента, а юристы помогают вам за кадром.'],
+    ['Юрист сейчас очень загружен. Давайте лучше я сама попробую ответить, хотя, честно говоря, всех тонкостей процедуры я не знаю.', 'Так вы роняете свою экспертность, и клиент перестаёт вам доверять.'],
+    ['Можно, но зачем? Я уже рассказала вам всё, что скажет юрист. Давайте лучше не будем тянуть и сразу всё оформим прямо сегодня.', 'Давление вместо ответа на вопросы клиента.'],
+  ])),
+  L(3, C('Как ответить?', 'Давайте вернёмся к этому через пару месяцев. Сейчас не до этого.', [
+    ['Понимаю, сейчас много забот. Только за эти месяцы удержания из зарплаты продолжатся, а долг будет расти. Может, начнём сейчас, чтобы это остановить?', 'Аргумент из ситуации клиента и мягкое предложение действовать.'],
+    ['Хорошо, тогда созвонимся через пару месяцев. Я вам обязательно наберу, и тогда мы спокойно всё обсудим, когда у вас будет время, договорились?', 'Вы сами отложили решение, а ситуация клиента за это время ухудшится.'],
+    ['Через пару месяцев цены точно вырастут, и мест в работе может уже не остаться, так что лучше решайте прямо сегодня, пока ещё не поздно.', 'Запугивание выдуманными условиями вместо аргументов из жизни клиента.'],
+  ])),
+  L(3, C('Как ответить?', 'Давайте я вам завтра сам перезвоню.', [
+    ['Хорошо. Давайте договоримся точно: завтра с 15 до 16 я наберу, и вы скажете, что решили. Удобно?', 'Вы сохранили инициативу: есть время и цель следующего звонка.'],
+    ['Конечно, звоните, когда вам будет удобно. Я буду ждать вашего звонка завтра в течение всего дня.', 'Инициатива ушла к клиенту, и он часто не перезванивает.'],
+    ['Зачем откладывать? Давайте решим прямо сейчас, завтра условия могут уже и не действовать.', 'Давление вместо договорённости.'],
+  ])),
+]},
+];
+
+/* ================= ДОКЛАД ПО ДЕЛУ (итоговый зачёт) ================= */
+/* Итоговый зачёт убран: самопроверка собирается из заданий глав. */
+
+/* ================= ЛОЖНЫЕ СЛЕДЫ И ЗАЦЕПКИ =================
+   Ловушка: верный ответ — след распознан, шаг вперёд; ошибка — назад на 2.
+   Зацепка: верный ответ — вперёд на 2; ошибка — просто шаг вперёд. */
+const EVENTS = {
+  1: { kind: 'trap', n: 2, t: 'Ложный след: звонок без подготовки', d: 'Звонок клиенту через минуту, а вы ещё не открыли его карточку.',
+       task: C('Что сделать в первую очередь?', null, [
+         ['Открыть карточку клиента в CRM и просмотреть историю', 'Вы помните клиента, и он это слышит.'],
+         ['Сразу набрать номер: по ходу разговора всё прояснится', 'Паузы и поиски во время звонка клиент слышит.'],
+         ['Повторить вслух весь скрипт от начала и до самого конца', 'Скрипт не заменит знания конкретного клиента.'],
+       ]) },
+  2: { kind: 'bonus', n: 2, t: 'Зацепка: первые секунды', d: 'Клиент взял трубку. Пройдите весь этап установления контакта.',
+       task: C('С чего начать разговор?', 'Алло, слушаю.', [
+         ['«Добрый день! Меня зовут Анна, «Белый маркер». Вы интересовались списанием долгов, и я звоню помочь. Предлагаю так: задам пару вопросов, потом расскажу варианты. Хорошо?»', 'Приветствие, представление, инфоповод и программирование — все подэтапы на месте.'],
+         ['«Добрый день! Вы интересовались списанием долгов. Сейчас я подробно расскажу вам обо всех наших услугах, тарифах и условиях рассрочки, это совсем недолго, буквально пару минут»', 'Вы не представились и не задали сценарий: дальше будет монолог, а не разговор.'],
+         ['«Здравствуйте, это «Белый маркер». Предлагаю так: я задам вам несколько вопросов о вашей ситуации, а потом расскажу, чем мы можем помочь. Вам удобно сейчас разговаривать?»', 'Нет имени и инфоповода: клиент не понимает, кто и зачем ему звонит.'],
+       ]) },
+  3: { kind: 'trap', n: 2, t: 'Ложный след: «вредный» вопрос', d: 'Клиент интересовался списанием долгов месяц назад, и вы перезваниваете.',
+       task: C('С какого вопроса начать?', null, [
+         ['«Как сейчас обстоят дела с платежами по кредитам?»', 'Конкретный открытый вопрос: клиент сразу рассказывает о ситуации.'],
+         ['«Сейчас это для вас ещё актуально или уже нет?»', 'Интуитивный ответ «уже нет» закрывает разговор.'],
+         ['«Вы случайно ещё не передумали решать вопрос?»', 'Вопрос сам подсказывает клиенту отказ.'],
+       ]) },
+  4: { kind: 'bonus', n: 2, t: 'Зацепка: попали в потребность', d: 'Клиент только что признался, что его больше всего мучает.',
+       task: C('На чём строить презентацию?', 'Приставы удерживают половину зарплаты, на жизнь почти ничего не остаётся.', [
+         ['На том, как прекратятся удержания и станет легче жить', 'Вы говорите о его боли, и он слышит своё решение.'],
+         ['На количестве наших юристов и выигранных ими дел', 'Это про нас, а не про его проблему.'],
+         ['На стоимости услуг и удобных условиях рассрочки', 'Цена без ценности звучит как «дорого».'],
+       ]) },
+  5: { kind: 'trap', n: 2, t: 'Ложный след: спор с клиентом', d: 'Клиент только что сказал «дорого». Одно неверное слово, и он закроется.',
+       task: C('Какой будет ваша первая реплика?', 'Это дорого.', [
+         ['«Понимаю, цена действительно имеет значение»', 'Присоединение к эмоции открывает путь к аргументам.'],
+         ['«Это не дорого, у других компаний ещё дороже»', 'Спор закрывает клиента.'],
+         ['«Дешевле вы всё равно нигде не найдёте, поверьте»', 'Давление вместо понимания.'],
+       ]) },
+  6: { kind: 'bonus', n: 2, t: 'Зацепка: следующий шаг', d: 'Клиент согласился. Осталось не потерять его после звонка.',
+       task: C('Что сказать клиенту?', 'Хорошо, давайте оформлять.', [
+         ['«Отправляю договор и ссылку на оплату. Затем досудебный отдел проведёт анкетирование и соберёт документы, а на вопросы ответит ваш специалист сопровождения»', 'Клиент знает, что будет дальше и к кому обращаться с вопросами.'],
+         ['«Отлично! Тогда, прежде чем оформлять, я ещё подробно расскажу вам про нашу компанию, её историю, награды и большую команду опытных юристов»', 'Лишняя презентация после согласия может породить новые сомнения.'],
+         ['«Хорошо. Оплатите, как вам будет удобно, а дальше просто ждите: когда понадобятся какие-то документы, с вами кто-нибудь из наших свяжется сам»', 'Клиент не понимает следующих шагов и может потеряться.'],
+       ]) },
+};
+
+/* ================= НАСТРОЙКИ ТРЕНЕРА =================
+   Кодовые слова и факты о компании. Регистр и буква «ё» не важны.
+   Если список ответов на факт пустой, засчитывается любой ответ. */
+const CONFIG = {
+  days: { 2: { code: 'АКТИВАЦИЯ', title: 'День 2 · главы 4–6' } },
+  locks: {},
+  facts: {
+    2: { q: 'С какого года «Белый маркер» на рынке?', hint: 'Год', a: ['2018'] },
+    5: { q: 'Как зовут генерального директора «Белого маркера»?', hint: 'Имя', a: ['андрей'] },
+  },
+};
+
+/* Порядок внутри главы: шаг 1 — инструмент, шаг 2 — пример, шаг 3 — кейс */
+(() => {
+  const plan = {
+    1: [[1, 2, 3], [8, 4, 9, 7], [5, 6]],
+    2: [[1, 3, 5, 6], [7, 2, 8], [4, 9, 10]],
+    3: [[2, 5, 12], [1, 7, 8, 4, 10, 6], [3, 9, 11]],
+  };
+  for (const st of STAGES) {
+    const p = plan[st.id]; if (!p) continue;
+    const src = st.tasks;
+    st.tasks = p.flatMap((nums, k) => nums.map(n => L(k + 1, src[n - 1])));
+    if (st.id === 2) st.tasks.forEach(t => delete t.g);
+  }
+})();
+(() => {
+  const st = STAGES.find(s => s.id === 5), src = st.tasks;
+  const plan = [[2, 8], [1, 7, 6, 11, 12], [3, 4, 9, 5, 10]];
+  st.tasks = plan.flatMap((nums, k) => nums.map(n => L(k + 1, src[n - 1])));
+  G('react', src[0]); G('react', src[6]);
+  STAGES.find(s => s.id === 3).tasks.forEach(t => { if (/Определите тип/.test(t.q)) t.g = 'qtype'; if (/«вредным»/.test(t.q)) t.g = 'harm'; });
+})();
+
+/* Цели этапов — показываются на первой карточке главы */
+(() => {
+  const GOALS = {
+    1: 'Войти в разговор собранным: с планом, нужной информацией и верой в продукт, компанию и себя.',
+    2: 'Разговорить клиента, вызвать доверие к себе как к человеку и профессионалу, расположить к диалогу.',
+    3: 'Понять ситуацию клиента, его боль и то, что побудило обратиться сейчас, чтобы подобрать решение.',
+    4: 'На основе выявленных болей и целей показать, как наше решение меняет жизнь клиента.',
+    5: 'Развеять сомнения клиента, усилить интерес к услуге и направить разговор в нужное русло.',
+    6: 'Помочь клиенту принять решение, к которому он практически готов, и довести до активации.',
+  };
+  STAGES.forEach(s => { s.goal = GOALS[s.id]; });
+})();
+
+</script>
+<script>
+(function(){
+const KEY = 'delo127.v1', KEY_T = 'delo127.test', COLS = 6, ROWS = 5, SC_PER = 2;
+const $app = document.getElementById('app');
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const PC = z => z >= 1 && z <= 6 ? `var(--p${z})` : z === 7 ? 'var(--kraft)' : 'var(--red)';
+const norm = s => String(s || '').toLowerCase().replace(/ё/g, 'е').replace(/[^a-zа-я0-9]+/g, ' ').trim();
+const NZ = STAGES.length;
+
+/* ---------- board ---------- */
+const LAYOUT = { 1: ['q', 'ev', 'q', 'q'], 2: ['q', 'ev', 'q', 'q', 'fact'], 3: ['q', 'ev', 'q', 'q'], 4: ['q', 'ev', 'q', 'q'], 5: ['q', 'ev', 'q', 'q', 'fact'], 6: ['q', 'ev', 'q', 'q'] };
+const CELLS = [{ type: 'start', z: 0 }];
+STAGES.forEach(s => { if (s.id === 4) CELLS.push({ type: 'gate', z: -1, day: 2 }); let k = 0; LAYOUT[s.id].forEach(t => CELLS.push(t === 'q' ? { type: t, z: s.id, step: ++k } : { type: t, z: s.id })); });
+CELLS.push({ type: 'finish', z: 7 });
+const LAST = CELLS.length - 1;
+const zoneRange = z => { let a = -1, b = -1; CELLS.forEach((c, i) => { if (c.z === z) { if (a < 0) a = i; b = i; } }); return [a, b]; };
+const rc = i => { const r = Math.floor(i / COLS), k = i % COLS; return { row: r, col: r % 2 === 0 ? k : COLS - 1 - k }; };
+const center = i => { const { row, col } = rc(i); return [(col + .5) * 100, (row + .5) * 100]; };
+const lensAt = i => { const [x, y] = center(i); return [x + 30, y + 30]; };
+const lensPos = i => { const [x, y] = center(i); return [x / COLS, y / ROWS]; };
+const rot = i => ((i * 37) % 9 - 4) * .9;
+const POOL = z => STAGES[z - 1].tasks;
+const chapterOf = z => z === 7 ? 'Дело закрыто' : z === -1 ? 'Конец дня' : z ? STAGES[z - 1].chapter : 'Начало';
+const gateIdx = d => CELLS.findIndex(c => c.type === 'gate' && c.day === d);
+const dayOf = i => i <= gateIdx(2) ? 1 : 2;
+const stageOf = z => z === 7 ? 'Финал' : z ? STAGES[z - 1].title : '';
+
+/* ---------- state ---------- */
+const blank = name => ({ name: name || '', started: false, pos: 0, task: null, used: {}, usedG: {}, spent: {}, open: {}, right: 0, tries: 0, done: null, sc: null });
+let S = blank();
+try { const raw = JSON.parse(localStorage.getItem(KEY) || 'null'); if (raw && raw.v === 2) S = Object.assign(blank(), raw); } catch (e) {}
+S.v = 2;
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} };
+let TEST = false;
+try { TEST = localStorage.getItem(KEY_T) === '1'; } catch (e) {}
+if (location.hash === '#trener') TEST = true;
+const setTest = v => { TEST = v; try { v ? localStorage.setItem(KEY_T, '1') : localStorage.removeItem(KEY_T); } catch (e) {} };
+if (TEST) setTest(true);
+
+if (!S.open) S.open = {};
+let V = null, busy = false, flash = null, formErr = '', boardOpen = false, showDossier = false;
+const PORTRAIT = `<svg class="portrait" viewBox="0 0 220 262" role="img" aria-label="Фото клиента: Иван Петрович"><defs><clipPath id="ph"><rect x="14" y="14" width="192" height="186"/></clipPath><linearGradient id="bgp" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8E98A3"/><stop offset="1" stop-color="#5E6670"/></linearGradient></defs><rect x="0" y="0" width="220" height="262" rx="3" fill="#F7F3EA"/><rect x="14" y="14" width="192" height="186" fill="url(#bgp)"/><g clip-path="url(#ph)"><rect x="14" y="150" width="192" height="60" fill="#4E555E" opacity=".35"/><path d="M40 210 C44 168 70 150 110 150 C150 150 176 168 180 210 Z" fill="#3B3F46"/><path d="M92 150 L110 182 L128 150 Z" fill="#D9D4C7"/><path d="M104 160 L110 196 L116 160 L110 154 Z" fill="#6B2A27"/><path d="M92 150 L102 176 L86 158 Z M128 150 L118 176 L134 158 Z" fill="#2E3238"/><rect x="98" y="128" width="24" height="26" rx="6" fill="#C99C7C"/><ellipse cx="110" cy="100" rx="35" ry="42" fill="#DDB08F"/><ellipse cx="75" cy="104" rx="6" ry="10" fill="#CFA080"/><ellipse cx="145" cy="104" rx="6" ry="10" fill="#CFA080"/><path d="M75 92 C72 62 92 52 112 54 C132 55 148 66 145 92 C140 78 132 72 124 74 C114 66 98 70 92 76 C84 74 78 82 75 92 Z" fill="#6A5E52"/><path d="M94 85 C98 83 102 81 106 79 M126 85 C122 83 118 81 114 79" stroke="#4A4038" stroke-width="3" stroke-linecap="round" fill="none"/><ellipse cx="100" cy="93" rx="4" ry="2.6" fill="#2B2420"/><ellipse cx="120" cy="93" rx="4" ry="2.6" fill="#2B2420"/><path d="M94 99 C98 102 103 102 106 99 M114 99 C117 102 122 102 126 99" stroke="#B88A6C" stroke-width="1.6" fill="none"/><path d="M110 96 C108 106 106 110 110 113 C112 113 114 112 114 111" stroke="#B48466" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M101 124 C106 121 114 121 119 124" stroke="#8C5A48" stroke-width="2.6" fill="none" stroke-linecap="round"/><path d="M80 112 C84 134 98 142 110 142 C122 142 136 134 140 112 C136 126 124 132 110 132 C96 132 84 126 80 112 Z" fill="#7E6E62" opacity=".28"/><rect x="14" y="14" width="192" height="186" fill="#C9A86A" opacity=".10"/></g><text x="110" y="238" text-anchor="middle" font-family="Caveat, 'Segoe Script', cursive" font-weight="700" font-size="24" fill="#1D2B66" textLength="170" lengthAdjust="spacingAndGlyphs">Иван Петрович, 42</text><path d="M150 -6 L150 30 C150 40 166 40 166 30 L166 2 C166 -4 158 -4 158 2 L158 26" fill="none" stroke="#9AA0A6" stroke-width="3" stroke-linecap="round"/></svg>`;
+const RANKS = [[100, 'Детектив-легенда', 'без единой ошибки'], [80, 'Старший следователь', '80–99%'], [60, 'Следователь', '60–79%'], [0, 'Стажёр', 'до 60%']];
+const rankOf = pct => RANKS.find(r => pct >= r[0]);
+const bestPct = () => S.done ? Math.max(S.done.all, S.done.best || 0) : 0;
+
+function pickTask(z, step){
+  const pool = POOL(z), key = z + '.' + step;
+  S.used[key] = S.used[key] || []; S.usedG[z] = S.usedG[z] || {};
+  const inStep = pool.map((t, i) => i).filter(i => (pool[i].l || 1) === step);
+  const ok = i => !S.used[key].includes(i) && !(pool[i].g && S.usedG[z][pool[i].g] && S.usedG[z][pool[i].g] !== i + 1);
+  let free = inStep.filter(ok);
+  if (!free.length) { const last = S.task && S.task.z === z ? S.task.idx : -1; S.used[key] = []; free = inStep.filter(i => i !== last); if (!free.length) free = inStep; }
+  const idx = free[Math.floor(Math.random() * free.length)];
+  S.used[key].push(idx); if (pool[idx].g) S.usedG[z][pool[idx].g] = idx + 1;
+  S.task = { z, idx, step, pos: S.pos }; V = null; save();
+}
+function startSelfCheck(){
+  const list = [];
+  STAGES.forEach(st => shuffle(st.tasks.map((_, i) => i)).slice(0, SC_PER).forEach(idx => list.push({ z: st.id, idx })));
+  S.sc = { list, i: 0, right: 0, fin: false }; V = null; save();
+}
+const curTask = () => {
+  if (S.done && S.sc && !S.sc.fin) { const it = S.sc.list[S.sc.i]; return POOL(it.z)[it.idx]; }
+  const c = CELLS[S.pos]; if (c.type === 'ev') return EVENTS[c.z].task; return S.task ? POOL(S.task.z)[S.task.idx] : null;
+};
+const evidenceGot = () => STAGES.filter(s => S.pos > zoneRange(s.id)[1]).length;
+
+/* ---------- views ---------- */
+const lensSvg = ch => `<svg viewBox="0 0 60 60" aria-hidden="true"><line x1="40" y1="40" x2="56" y2="56" stroke="#5A3E22" stroke-width="8" stroke-linecap="round"/><line x1="40" y1="40" x2="56" y2="56" stroke="#8A6236" stroke-width="5" stroke-linecap="round"/><circle cx="25" cy="25" r="19" fill="rgba(255,250,235,.28)" stroke="#E3B95B" stroke-width="6"/><circle cx="25" cy="25" r="19" fill="none" stroke="#9A7426" stroke-width="1.5"/><text x="25" y="32" text-anchor="middle" font-family="Oswald, Arial Narrow, sans-serif" font-weight="700" font-size="20" fill="#fff" stroke="#14161B" stroke-width=".8" paint-order="stroke">${esc(ch)}</text></svg>`;
+
+function topHtml(){
+  return `<div class="top tl"><b data-act="title"><i></i>Белый маркер · отдел расследований</b>${S.started ? `<span class="ev"><button class="link" data-act="dossier" style="margin-right:14px;color:var(--gold)">Материалы дела</button>День ${dayOf(S.pos)} из 2 · улик ${evidenceGot()} из ${NZ}</span>` : '<span>Дело № 127</span>'}</div>
+    ${TEST ? `<div class="testbar tl"><span>Тестовый режим: нажмите на любую карточку, чтобы перенести лупу</span><button class="link" data-act="test-off">выключить</button></div>` : ''}`;
+}
+function dossierHtml(){
+  return `<div class="ph"><div class="ch"><small>Материалы дела</small><b><i></i>Дело № 127</b></div><span class="stamp" style="font-size:12px;padding:2px 8px">СРОЧНО</span></div>
+    <div class="dossierbox">${PORTRAIT}
+    <dl class="dossier"><dt>Клиент</dt><dd>Иван Петрович, 42 года</dd><dt>Долг</dt><dd>1,4 млн ₽ · 6 кредиторов</dd><dt>Обстоятельства</dt><dd>Звонки коллекторов, арест карты, удержания из зарплаты</dd><dt>Улики</dt><dd>${evidenceGot()} из ${NZ}</dd></dl></div>
+    <p>Иван Петрович на грани. Каждый день новые звонки, а половину зарплаты забирают приставы. Ему уже обещали помочь и пропали с деньгами, поэтому он никому не верит.</p>
+    <p>Ваша задача — пройти шесть глав расследования, собрать шесть улик и вывести клиента к законному решению.</p>`;
+}
+function introHtml(){
+  return topHtml() + `<div class="intro">
+    <form class="file" id="nameform">
+      <span class="tab">ЛИЧНОЕ ДЕЛО КЛИЕНТА</span><span class="stamp">СРОЧНО</span>
+      <div class="tl" style="color:var(--ink-2)">Отдел расследований «Белого маркера»</div>
+      <h1>Дело<br>№ 127</h1>
+      ${PORTRAIT}<dl class="dossier"><dt>Клиент</dt><dd>Иван Петрович, 42 года</dd><dt>Долг</dt><dd>1,4 млн ₽ · 6 кредиторов</dd><dt>Обстоятельства</dt><dd>Звонки коллекторов, арест карты, удержания из зарплаты</dd><dt>Улики</dt><dd>0 из 6</dd></dl>
+      <p>Иван Петрович на грани. Каждый день новые звонки, а половину зарплаты забирают приставы. Ему уже обещали помочь и пропали с деньгами, поэтому он никому не верит.</p>
+      <p>Вам передают его дело. Пройдите шесть глав расследования, соберите шесть улик и закройте дело: выведите клиента к законному решению.</p>
+      <div class="who"><label for="nm">Следователь</label><input id="nm" autocomplete="name" placeholder="Ваши имя и фамилия" maxlength="60" value="${esc(S.name)}"><button class="btn" type="submit">Взять дело →</button></div>
+    </form>
+    <div>
+      <div class="note"><h2>Как вести расследование</h2><ol>
+        <li>На каждой карточке задание: вопрос, показания клиента, порядок шагов или сортировка.</li>
+        <li>Верный ответ — лупа переходит на следующую карточку.</li>
+        <li>Ошибка — остаётесь на месте и получаете другое задание.</li>
+        <li>Тёмные карточки — «Ложный след»: ответьте верно, и вы его обойдёте, ошибётесь — назад на 2.</li>
+        <li>Жёлтые карточки — «Зацепка»: верный ответ даёт +2.</li>
+        <li>«Архив» — вопрос о нашей компании. Ответ впишите сами.</li>
+        <li>Расследование идёт два дня. В конце первого дня на доске печать: снять её можно кодовым словом, которое вы получите у руководителя расследования.</li>
+        <li>После шестой главы дело закрыто: вы получите благодарность со званием. Звание можно повысить в самопроверке.</li>
+      </ol></div>
+      <div class="chapters">${STAGES.map(s => `${s.id === 1 || s.id === 4 ? `<p class="dayhead tl">День ${s.id === 1 ? 1 : 2}</p>` : ''}<div style="--pc:${PC(s.id)}"><i></i><div>Глава ${s.id}. ${esc(s.chapter)} <span>· ${esc(s.title)}</span></div></div>`).join('')}<div style="--pc:var(--kraft)"><i></i><div>Самопроверка <span>· по желанию, чтобы повысить звание</span></div></div></div>
+    </div></div>`;
+}
+function boardHtml(){
+  const pts = CELLS.map((_, i) => center(i).join(' ')).join(' L ');
+  const done = CELLS.slice(0, S.pos + 1).map((_, i) => center(i).join(' ')).join(' L ');
+  const cells = CELLS.map((c, i) => {
+    const { row, col } = rc(i);
+    let cls = c.type === 'q' ? 'cq' : c.type, label = '', lb = '';
+    if (c.type === 'start') label = 'ДЕЛО';
+    else if (c.type === 'finish') label = 'ФИНИШ';
+    else if (c.type === 'ev') { const e = EVENTS[c.z]; cls = e.kind; label = (e.kind === 'bonus' ? '+' : '−') + e.n; lb = e.kind === 'bonus' ? 'ЗАЦЕПКА' : 'ЛОЖНЫЙ СЛЕД'; }
+    else if (c.type === 'lock') { label = 'КОД'; lb = 'СЕЙФ'; }
+    else if (c.type === 'fact') { label = 'ФАКТ'; lb = 'АРХИВ'; }
+    else if (c.type === 'gate') { label = 'ДЕНЬ ' + c.day; lb = 'ПЕЧАТЬ'; }
+    else label = '?';
+    if (i < S.pos) cls += ' passed';
+    if (i === S.pos) cls += ' cur';
+    return `<button class="cell ${cls}" data-cell="${i}" style="grid-row:${row + 1};grid-column:${col + 1};--rot:${rot(i)}deg;--pc:${PC(c.z)}" tabindex="${TEST ? 0 : -1}" aria-label="Карточка ${i}">${lb ? `<span class="lb">${lb}</span>` : ''}<span>${label}</span><span class="no">${i || ''}</span></button>`;
+  }).join('');
+  const [cx, cy] = lensAt(S.pos);
+  return `<div class="board ${TEST ? 'test' : ''}">
+    <svg viewBox="0 0 ${COLS * 100} ${ROWS * 100}" preserveAspectRatio="none" aria-hidden="true"><path d="M ${pts}" fill="none" stroke="#C3322A" stroke-opacity=".45" stroke-width="2" vector-effect="non-scaling-stroke"/>
+    ${S.pos > 0 ? `<path d="M ${done}" fill="none" stroke="#E2483C" stroke-width="3.5" vector-effect="non-scaling-stroke"/>` : ''}</svg>
+    <div class="cells">${cells}</div>
+    <div class="lens" id="lens" style="left:${cx / COLS}%;top:${cy / ROWS}%">${lensSvg((S.name || '').trim().charAt(0).toUpperCase())}</div>
+  </div>`;
+}
+function evidenceHtml(){
+  const z = CELLS[S.pos].z;
+  return `<div class="evstrip">${STAGES.map(s => { const got = S.pos > zoneRange(s.id)[1] || !!S.done; return `<div class="${got ? 'got' : z === s.id ? 'now' : ''}" style="--pc:${PC(s.id)}"><i></i><div style="min-width:0"><b>Улика ${s.id}</b><span>${esc(s.chapter)}</span></div></div>`; }).join('')}</div>`;
+}
+function minibarHtml(){
+  const z = CELLS[S.pos].z, pct = Math.round(S.pos / LAST * 100);
+  return `<div class="minibar"><div class="mt"><span class="tl" style="color:var(--dim)">Карточка ${S.pos} из ${LAST}</span><b>${esc(chapterOf(z))}</b><div class="bar"><i style="width:${pct}%"></i></div></div><button class="link" data-act="board">${boardOpen ? 'Скрыть доску' : 'Показать доску'}</button></div>`;
+}
+function render(){
+  if (!S.started) { $app.innerHTML = introHtml(); return; }
+  const z = CELLS[S.pos].z;
+  $app.innerHTML = topHtml() + evidenceHtml() + `<div class="game">
+      <div>${minibarHtml()}<div class="boardbox ${boardOpen ? 'open' : ''}"><div class="bhead"><span class="tl">Доска улик</span><span class="tl">карточка ${S.pos} / ${LAST}</span></div>${boardHtml()}</div></div>
+      <aside class="panel" style="--pc:${PC(z)}"><div class="pin" id="panel">${panelHtml()}</div></aside>
+    </div>`;
+}
+function panelHead(){
+  const c = CELLS[S.pos];
+  const small = c.type === 'gate' ? `День ${c.day - 1} позади` : c.z === 7 ? 'Финал' : c.z ? `Глава ${c.z} · ${stageOf(c.z)}` : 'Дело № 127';
+  const acc = S.tries ? `${S.right} из ${S.tries}<br>верных` : '';
+  return `<div class="ph"><div class="ch"><small>${esc(small)}</small><b><i></i>${esc(chapterOf(c.z))}</b></div><div class="acc">${acc}</div></div>`;
+}
+function panelHtml(){
+  const c = CELLS[S.pos];
+  let fl = '';
+  if (flash && flash.stage) { const a = flash.stage, st = STAGES[a - 1];
+    fl = `<div class="milestone"><span class="seal">ОК</span><span class="tl">Глава ${a} закрыта</span><h3>Поздравляю, этап освоен!</h3><p>«${esc(st.title)}» — пройдено. Улика ${a} «${esc(st.chapter)}» в деле.${flash.day ? ' Рабочий день следователя окончен.' : ''}</p></div>`; }
+  else if (flash) fl = `<div class="toast">${esc(flash)}</div>`;
+  flash = null;
+  if (S.done) return closedHtml();
+  if (showDossier && c.type !== 'start') return dossierHtml() + `<div class="act"><span></span><button class="btn" data-act="dossier">Вернуться к заданию →</button></div>`;
+  if (c.type === 'start') return fl + `<p class="q">Дело у вас в руках, следователь ${esc(S.name)}.</p><p>Первая глава — «План расследования». Без подготовки к клиенту не выходят.</p><div class="act"><span></span><button class="btn" data-act="go1">Начать →</button></div>` + `<div style="border-top:1.5px dashed var(--paper-edge);margin-top:18px;padding-top:16px">` + dossierHtml() + `</div>`;
+  if (c.type === 'finish') return finishHtml();
+  if (c.type === 'gate') return gateHtml(c, fl);
+  if (c.type === 'fact') return factHtml(c, fl);
+  if (c.type === 'lock' && !S.open[S.pos]) return lockHtml(c, fl);
+  if (c.type === 'ev') {
+    const e = EVENTS[c.z];
+    const head = `<div class="event ${e.kind}"><span class="tl">${e.kind === 'bonus' ? 'Зацепка' : 'Ложный след'}</span><h3>${esc(e.t.replace(/^.*?: /, ''))}</h3><p>${esc(e.d)}</p><span class="rule">${e.kind === 'bonus' ? `Верный ответ: вперёд на ${e.n}. Ошибка: просто шаг вперёд.` : `Верный ответ: след распознан, шаг вперёд. Ошибка: назад на ${e.n}.`}</span></div>`;
+    if (S.spent[S.pos]) return panelHead() + fl + `<div class="event ${e.kind}"><span class="tl">Уже проверено</span><h3>${esc(e.t.replace(/^.*?: /, ''))}</h3><p>Эту карточку вы уже проходили. Идём дальше.</p></div><div class="act"><span></span><button class="btn" data-act="step">Шаг вперёд →</button></div>`;
+    return panelHead() + fl + head + taskHtml(e.task, true);
+  }
+  if (!S.task || S.task.pos !== S.pos) pickTask(c.z, c.step);
+  const goal = c.step === 1 && STAGES[c.z - 1].goal ? `<div class="goal" style="--pc:${PC(c.z)}"><span class="tl">Цель этапа «${esc(STAGES[c.z - 1].title)}»</span><p>${esc(STAGES[c.z - 1].goal)}</p></div>` : '';
+  return panelHead() + fl + goal + taskHtml(curTask(), false);
+}
+
+function taskHtml(t, isEvent){
+  if (!V) {
+    if (t.type === 'choice') V = { order: shuffle(t.opts.map((_, j) => j)) };
+    if (t.type === 'order') V = { pool: shuffle(t.items.map((_, j) => j)), ans: [] };
+    if (t.type === 'sort') V = { pick: t.items.map(() => null), rows: shuffle(t.items.map((_, j) => j)) };
+  }
+  let inner = '';
+  const testimony = t.client ? `<div class="testimony"><small>Из показаний клиента</small>«${esc(t.client)}»</div>` : '';
+  if (t.type === 'choice') {
+    inner = `<div class="opts">${V.order.map((j, n) => { const o = t.opts[j];
+      let cls = ''; if (V.done) { if (o.ok) cls = 'right'; else if (V.sel === j) cls = 'wrong'; else cls = 'dim'; }
+      const fb = V.done && (o.ok || V.sel === j) ? `<span class="fb">${esc(o.f)}</span>` : '';
+      return `<button class="opt ${cls}" data-opt="${j}" ${V.done ? 'disabled' : ''}><span class="k">${V.done && o.ok ? '✓' : V.done && V.sel === j ? '✕' : 'АБВГ'[n]}</span><span>${esc(o.t)}${fb}</span></button>`; }).join('')}</div>`;
+  }
+  if (t.type === 'order') {
+    inner = `<div class="pool">${V.pool.map(j => `<button class="tok" data-pool="${j}" ${V.done ? 'disabled' : ''}>${esc(t.items[j])}</button>`).join('')}</div>
+      <div class="answer">${V.ans.map((j, n) => { const cls = V.done ? (j === n ? 'right' : 'wrong') : ''; return `<button class="tok ${cls}" data-ans="${n}" ${V.done ? 'disabled' : ''}><span>${esc(t.items[j])}</span>${V.done ? '' : '<span class="x">убрать</span>'}</button>`; }).join('')}</div>`;
+    if (!V.done) inner += `<div class="act"><button class="link" data-act="oclear" ${V.ans.length ? '' : 'hidden'}>Сбросить</button><button class="btn dark" data-act="ocheck" ${V.pool.length ? 'disabled' : ''}>Проверить</button></div>`;
+  }
+  if (t.type === 'sort') {
+    inner = `<div class="srt">${V.rows.map(j => { const [txt, b] = t.items[j]; const pk = V.pick[j];
+      const cls = V.done ? (pk === b ? 'right' : 'wrong') : '';
+      return `<div class="srow ${cls}"><div>${esc(txt)}${V.done && pk !== b ? `<span class="fix">Правильно: ${esc(t.buckets[b])}</span>` : ''}</div><div class="seg" role="group">${t.buckets.map((bn, bi) => `<button data-srow="${j}" data-b="${bi}" class="${pk === bi ? 'on' : ''}" ${V.done ? 'disabled' : ''} aria-pressed="${pk === bi}">${esc(bn)}</button>`).join('')}</div></div>`; }).join('')}</div>`;
+    if (!V.done) inner += `<div class="act"><span></span><button class="btn dark" data-act="scheck" ${V.pick.some(p => p === null) ? 'disabled' : ''}>Проверить</button></div>`;
+  }
+  let after = '';
+  if (V.done) {
+    const ok = V.ok;
+    let detail = '';
+    if (t.type === 'order' && !ok) detail = `<div class="verdict-body">Правильный порядок:<ol class="correct-order">${t.items.map(s => `<li>${esc(s)}</li>`).join('')}</ol></div>`;
+    if (t.type === 'sort' && !ok) detail = `<div class="verdict-body">Верно ${V.right} из ${t.items.length}. Нужно разложить всё без ошибок.</div>`;
+    let btn, title;
+    if (isEvent) {
+      const e = EVENTS[CELLS[S.pos].z];
+      if (e.kind === 'trap') { title = ok ? 'След распознан' : 'Вы пошли по ложному следу'; btn = ok ? `<button class="btn" data-act="ev-go" data-n="1">Обойти след →</button>` : `<button class="btn dark" data-act="ev-go" data-n="-${e.n}">Назад на ${e.n}</button>`; }
+      else { title = ok ? 'Зацепка найдена' : 'Зацепка упущена'; btn = ok ? `<button class="btn" data-act="ev-go" data-n="${e.n}">Вперёд на ${e.n} →</button>` : `<button class="btn dark" data-act="ev-go" data-n="1">Шаг вперёд →</button>`; }
+    } else if (S.done && S.sc) { title = ok ? 'Верно' : 'Неверно'; btn = `<button class="btn" data-act="sc-next">${S.sc.i + 1 < S.sc.list.length ? 'Следующий вопрос →' : 'Результат →'}</button>`; }
+    else { title = ok ? 'Улика подтверждена' : 'Версия не сходится'; btn = ok ? `<button class="btn" data-act="step">Следующая карточка →</button>` : `<button class="btn dark" data-act="retry">Другое задание</button>`; }
+    after = `<div class="verdict ${ok ? 'ok' : 'no'}">${title}<span>${ok ? '✓' : '✕'}</span></div>${detail}<div class="act"><span></span>${btn}</div>`;
+  }
+  return `<p class="q">${esc(t.q)}</p>` + testimony + inner + after;
+}
+
+function codeForm(kind, label, btn, hint){
+  const err = formErr ? `<div class="formerr">${esc(formErr)}</div>` : ''; formErr = '';
+  return `<form class="codeform" data-kind="${kind}"><label for="code">${esc(label)}</label><div class="row"><input id="code" autocomplete="off" spellcheck="false" placeholder="${esc(hint || 'Кодовое слово')}" maxlength="80"><button class="btn dark" type="submit">${esc(btn)}</button></div>${err}${TEST && kind !== 'fact' ? `<div class="testhint">Тестовый режим: код — ${esc(CONFIG.days[CELLS[S.pos].day].code)}</div>` : ''}</form>`;
+}
+function lockHtml(c, fl){
+  return panelHead() + fl + `<div class="event lockcard"><span class="tl">Сейф с материалами</span><h3>Задание под замком</h3><p>В сейфе лежат материалы по главе «${esc(chapterOf(c.z))}». Чтобы открыть его, запросите у руководителя расследования кодовое слово.</p></div>` + codeForm('lock', 'Кодовое слово', 'Открыть сейф');
+}
+function gateHtml(c, fl){
+  if (S.open[S.pos]) return panelHead() + fl + `<div class="event lockcard"><span class="tl">Печать снята</span><h3>${esc(CONFIG.days[c.day].title)}</h3><p>Расследование продолжается.</p></div><div class="act"><span></span><button class="btn" data-act="step">Дальше →</button></div>`;
+  return panelHead() + fl + `<div class="event gatecard"><span class="tl">Конец дня ${c.day - 1}</span><h3>На сегодня всё, следователь</h3><p>Улики дня собраны. Дело продолжим на следующей встрече: ${esc(CONFIG.days[c.day].title)}. Код, чтобы снять печать, вы получите у руководителя расследования.</p></div>` + codeForm('gate', 'Код следующего дня', 'Снять печать');
+}
+function factHtml(c, fl){
+  const f = CONFIG.facts[c.z];
+  const card = `<div class="event factcard"><span class="tl">Архив компании</span><h3>Проверка осведомлённости</h3><p>Следователь должен знать, на кого работает. Ответьте на вопрос из архива «Белого маркера».</p></div><p class="q">${esc(f.q)}</p>`;
+  if (S.open[S.pos]) return panelHead() + fl + card + `<div class="verdict ok">Факт подтверждён<span>✓</span></div>${S.open[S.pos] === 2 ? '<div class="verdict-body">Ответ пока не задан тренером, засчитано автоматически.</div>' : ''}<div class="act"><span></span><button class="btn" data-act="step">Следующая карточка →</button></div>`;
+  return panelHead() + fl + card + codeForm('fact', 'Ваш ответ', 'Проверить', f.hint) + (TEST ? `<div class="testhint">Тестовый режим: ${f.a.length ? 'ответ — ' + esc(f.a.join(' / ')) : 'ответ не задан, подойдёт любой'}</div>` : '');
+}
+function finishHtml(){
+  if (!S.done) { S.done = { all: S.tries ? Math.round(S.right / S.tries * 100) : 0, right: S.right, tries: S.tries, date: new Date().toISOString() }; save(); }
+  return closedHtml();
+}
+function closedHtml(){
+  if (S.sc) return scHtml();
+  const d = new Date(S.done.date), best = bestPct(), rk = rankOf(best);
+  const note = S.done.note ? `<div class="newrank">${esc(S.done.note)}</div>` : ''; if (S.done.note) { S.done.note = ''; save(); }
+  setTimeout(drawCertPreview, 0);
+  return `<div class="res">${note}
+    <img class="cert" id="certimg" alt="Благодарность за раскрытие дела № 127">
+    <div class="act" style="justify-content:center;width:100%;gap:10px;flex-wrap:wrap;margin-top:6px"><button class="btn" data-act="cert-dl">Скачать благодарность</button></div>
+    <div class="rankline"><span class="tl" style="color:var(--ink-2)">Ваше звание</span><b>${esc(rk[1])}</b></div>
+    <div class="ranks">${RANKS.slice().reverse().map(r => `<div class="${r === rk ? 'on' : ''}"><b>${esc(r[1])}</b>${esc(r[2])}</div>`).join('')}</div>
+    <div class="kpis"><div><b>${S.done.all}%</b><span>верных за дело</span></div><div><b>${S.done.best != null ? S.done.best + '%' : '—'}</b><span>лучшая самопроверка</span></div><div><b>${d.toLocaleDateString('ru-RU')}</b><span>дата</span></div></div>
+    <div class="selfcheck"><b>Повысить звание</b><span>Самопроверка: ${STAGES.length * SC_PER} случайных заданий из всех глав. Если результат выше, звание повысится и благодарность обновится. Звание никогда не понижается.</span></div>
+    <div class="act" style="justify-content:center;width:100%;gap:10px;flex-wrap:wrap"><button class="btn dark" data-act="sc-start">Пройти самопроверку</button><button class="btn ghost" data-act="restart">Взять новое дело</button></div></div>`;
+}
+/* ---------- certificate ---------- */
+const SIGN = { role: 'Руководитель расследования', name: 'Светлана Киселёва', img: 'data:image/png;base64,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' };
+const NAME_STYLE = 'ink'; // 'ink' — вписано от руки, 'serif' — тёмно-красный курсив
+let SIGN_IMG = null;
+const loadSign = () => SIGN_IMG ? Promise.resolve(SIGN_IMG) : new Promise(r => { const im = new Image(); im.onload = () => { SIGN_IMG = im; r(im); }; im.onerror = () => r(null); im.src = SIGN.img; });
+async function drawCert(){
+  const W = 1754, H = 1240, cv = document.createElement('canvas'); cv.width = W; cv.height = H;
+  const x = cv.getContext('2d');
+  try { await Promise.all(['700 40px Oswald', '600 40px Oswald', '400 20px "PT Mono"', '400 30px Onest', '600 30px Onest', '700 60px Caveat', 'italic 700 40px "PT Serif"'].map(f => document.fonts.load(f, 'АБВ'))); } catch (e) {}
+  const best = bestPct(), rk = rankOf(best), name = (S.name || 'Следователь').trim();
+  const HEAD = 'Oswald, "Arial Narrow", Arial, sans-serif', BODY = 'Onest, Inter, Arial, sans-serif', TYPE = '"PT Mono", "Courier New", monospace';
+  // paper
+  x.fillStyle = '#EDE6D6'; x.fillRect(0, 0, W, H);
+  const g = x.createRadialGradient(W / 2, H / 2, H * .3, W / 2, H / 2, W * .75); g.addColorStop(0, 'rgba(255,250,235,.0)'); g.addColorStop(1, 'rgba(120,95,50,.22)'); x.fillStyle = g; x.fillRect(0, 0, W, H);
+  x.strokeStyle = '#25211B'; x.lineWidth = 4; x.strokeRect(54, 54, W - 108, H - 108); x.lineWidth = 1.5; x.strokeRect(70, 70, W - 140, H - 140);
+  const sp = (t, n) => t.split('').join(String.fromCharCode(8202).repeat(n));
+  x.fillStyle = '#6E6556'; x.font = `400 22px ${TYPE}`; x.textBaseline = 'alphabetic';
+  x.textAlign = 'left'; x.fillText(sp('ОТДЕЛ РАССЛЕДОВАНИЙ «БЕЛОГО МАРКЕРА»', 2), 120, 140);
+  x.textAlign = 'right'; x.fillText(sp('ДЕЛО № 127', 2), W - 120, 140);
+  x.textAlign = 'center'; x.fillStyle = '#25211B';
+  x.font = `700 150px ${HEAD}`; x.fillText('БЛАГОДАРНОСТЬ', W / 2, 330);
+  x.fillStyle = '#C3322A'; x.fillRect(W / 2 - 90, 362, 180, 5);
+  x.fillStyle = '#25211B'; x.font = `400 36px ${BODY}`; x.fillText('за успешное раскрытие дела № 127', W / 2, 432);
+  const style = (window.__nameStyle || NAME_STYLE);
+  if (style === 'ink') {
+    let fs = 128; const F = n => `700 ${n}px Caveat, "Segoe Script", cursive`; x.font = F(fs); while (x.measureText(name).width > W - 420 && fs > 60) { fs -= 4; x.font = F(fs); }
+    x.strokeStyle = '#8C7F66'; x.lineWidth = 2; x.setLineDash([3, 9]); x.beginPath(); x.moveTo(330, 585); x.lineTo(W - 330, 585); x.stroke(); x.setLineDash([]);
+    x.fillStyle = '#1D2B66'; x.save(); x.translate(W / 2, 568); x.rotate(-.015); x.fillText(name, 0, 0); x.restore();
+  } else {
+    let fs = 100; const F = n => `italic 700 ${n}px "PT Serif", Georgia, serif`; x.font = F(fs); while (x.measureText(name).width > W - 380 && fs > 50) { fs -= 4; x.font = F(fs); }
+    x.fillStyle = '#8E1F18'; x.fillText(name, W / 2, 568);
+  }
+  x.fillStyle = '#4A443A'; x.font = `400 32px ${BODY}`; x.fillText('Все шесть улик собраны. Клиент выведен к законному решению.', W / 2, 640);
+  // rank block
+  const ry = 720; x.strokeStyle = '#D9CEB6'; x.lineWidth = 2; x.beginPath(); x.moveTo(300, ry); x.lineTo(W - 300, ry); x.stroke();
+  x.fillStyle = '#6E6556'; x.font = `400 22px ${TYPE}`; x.fillText(sp('ПРИСВОЕНО ЗВАНИЕ', 2), W / 2, ry + 58);
+  x.fillStyle = '#C3322A'; x.font = `700 84px ${HEAD}`; x.fillText(rk[1].toUpperCase(), W / 2, ry + 150);
+  x.fillStyle = '#4A443A'; x.font = `600 30px ${BODY}`;
+  x.fillText(`Точность ${best}%   ·   ${new Date().toLocaleDateString('ru-RU')}`, W / 2, ry + 205);
+  // signature
+  const sy = H - 200, sim = await loadSign(); let tx = 140;
+  if (sim) { const h = 220, w = sim.width / sim.height * h; x.drawImage(sim, 130, sy - 150, w, h); tx = 130 + w + 30; }
+  x.textAlign = 'left'; x.strokeStyle = '#25211B'; x.lineWidth = 2; x.beginPath(); x.moveTo(tx, sy - 4); x.lineTo(tx + 380, sy - 4); x.stroke();
+  x.fillStyle = '#25211B'; x.font = `600 32px ${BODY}`; x.fillText(SIGN.name, tx, sy + 40);
+  x.fillStyle = '#6E6556'; x.font = `400 22px ${TYPE}`; x.fillText(sp(SIGN.role.toUpperCase(), 1), tx, sy + 78);
+  // stamp
+  x.save(); x.translate(W - 330, H - 230); x.rotate(-.18); x.strokeStyle = 'rgba(195,50,42,.85)'; x.fillStyle = 'rgba(195,50,42,.85)';
+  x.lineWidth = 7; x.beginPath(); x.arc(0, 0, 150, 0, Math.PI * 2); x.stroke(); x.lineWidth = 3; x.beginPath(); x.arc(0, 0, 112, 0, Math.PI * 2); x.stroke();
+  const ring = '★ БЕЛЫЙ МАРКЕР ★ ОТДЕЛ РАССЛЕДОВАНИЙ '; x.font = `600 25px ${HEAD}`; x.textAlign = 'center';
+  for (let i = 0; i < ring.length; i++) { x.save(); x.rotate(i / ring.length * Math.PI * 2); x.fillText(ring[i], 0, -122); x.restore(); }
+  x.font = `700 40px ${HEAD}`; x.fillText('ДЕЛО', 0, -12); x.font = `700 34px ${HEAD}`; x.fillText('РАСКРЫТО', 0, 30); x.font = `600 24px ${HEAD}`; x.fillText('№ 127', 0, 72);
+  x.restore();
+  return cv;
+}
+async function drawCertPreview(){ const img = document.getElementById('certimg'); if (!img) return; const cv = await drawCert(); img.src = cv.toDataURL('image/png'); }
+async function downloadCert(){
+  const cv = await drawCert(); const blob = await new Promise(r => cv.toBlob(r, 'image/png'));
+  const fname = `Благодарность — ${(S.name || 'следователь').trim()}.png`;
+  try { if (window.claude && window.claude.use) { const dl = await window.claude.use('downloads'); if (dl) { await dl.save({ filename: fname, data: blob }); return; } } } catch (e) { if (e && e.code === 'declined') return; }
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = fname; document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
+}
+function scHtml(){
+  const sc = S.sc, n = sc.list.length;
+  const head = `<div class="ph"><div class="ch"><small>Самопроверка · может повысить звание</small><b><i></i>${sc.fin ? 'Результат' : `Вопрос ${sc.i + 1} из ${n}`}</b></div><div class="acc">${sc.fin || sc.i ? `${sc.right} верных` : ''}</div></div>`;
+  if (sc.fin) { const pct = Math.round(sc.right / n * 100);
+    if (!sc.applied) { sc.applied = true; const before = rankOf(bestPct()); const prev = S.done.best;
+      if (prev == null || pct > prev) S.done.best = pct; const after = rankOf(bestPct());
+      sc.msg = after !== before ? `Новое звание: ${after[1]}! Благодарность обновлена.` : (prev == null || pct > prev) && S.done.best > S.done.all ? 'Лучший результат обновлён.' : `Звание сохраняется: ${after[1]}.`; save(); }
+    return head + `<div class="res"><div class="big ${pct >= 80 ? '' : 'no'}">${pct}%</div><h2>${pct >= 80 ? 'Отличная форма' : pct >= 60 ? 'Неплохо, но есть что повторить' : 'Стоит повторить материал'}</h2><p>Верно ${sc.right} из ${n}. Каждый раз набор заданий новый.</p><div class="newrank" style="margin-top:6px">${esc(sc.msg || '')}</div>
+      <div class="act" style="justify-content:center;gap:10px;flex-wrap:wrap"><button class="btn" data-act="sc-start">Пройти ещё раз</button><button class="btn ghost" data-act="sc-exit">К благодарности</button></div></div>`; }
+  const it = sc.list[sc.i];
+  return head + `<p class="tl" style="color:var(--ink-2);margin:0 0 6px">Глава ${it.z} · ${esc(STAGES[it.z - 1].title)}</p>` + taskHtml(curTask(), false);
+}
+
+/* ---------- movement ---------- */
+function moveTo(target){
+  busy = true;
+  const dir = target > S.pos ? 1 : -1, lens = document.getElementById('lens');
+  const tick = () => {
+    if (S.pos === target) { busy = false; showDossier = false; S.task = null; V = null; save(); render(); if (window.innerWidth < 940) { const p = document.getElementById('panel'); if (p) p.scrollIntoView({ behavior: 'smooth', block: 'start' }); } return; }
+    S.pos += dir; const [x, y] = lensAt(S.pos); if (lens) { lens.style.left = x / COLS + '%'; lens.style.top = y / ROWS + '%'; }
+    setTimeout(tick, 320);
+  };
+  tick();
+}
+function noteZoneChange(from, to){
+  const a = CELLS[from].z, b = CELLS[to].z;
+  if (a !== b && a >= 1 && a <= 6) flash = { stage: a, day: b === -1 };
+}
+function stepBy(n){
+  const c = CELLS[S.pos]; let target = S.pos + n;
+  if (c.type === 'ev') { const [a, b] = zoneRange(c.z); target = n > 0 ? Math.min(target, Math.max(b + (n === 1 ? 1 : 0), S.pos + 1)) : Math.max(target, a); }
+  target = Math.max(0, Math.min(LAST, target));
+  noteZoneChange(S.pos, target); moveTo(target);
+}
+function grade(ok, right){
+  V.done = true; V.ok = ok; if (right != null) V.right = right;
+  if (S.done && S.sc) { if (ok) S.sc.right++; }
+  else { S.tries++; if (ok) S.right++; }
+  save(); repaint();
+}
+function repaint(){ const p = document.getElementById('panel'); if (p) p.innerHTML = panelHtml(); }
+
+/* ---------- events ---------- */
+let titleClicks = 0, titleTimer = null;
+document.addEventListener('submit', e => {
+  const cf = e.target.closest('.codeform');
+  if (cf) {
+    e.preventDefault(); if (busy) return;
+    const v = document.getElementById('code').value; if (!norm(v)) { document.getElementById('code').focus(); return; }
+    const c = CELLS[S.pos], kind = cf.dataset.kind;
+    if (kind === 'lock' || kind === 'gate') {
+      const code = CONFIG.days[c.day].code;
+      if (norm(v) === norm(code)) {
+        S.open[S.pos] = 1; save();
+        if (kind === 'gate') { flash = `Печать снята. ${CONFIG.days[c.day].title}: глава «${chapterOf(CELLS[S.pos + 1].z)}».`; stepBy(1); }
+        else { flash = 'Сейф открыт.'; repaint(); }
+      } else { formErr = 'Код не подходит. Уточните его у руководителя расследования.'; repaint(); }
+      return;
+    }
+    if (kind === 'fact') {
+      const f = CONFIG.facts[c.z]; const ans = norm(v);
+      const ok = !f.a.length || f.a.some(x => { const n = norm(x); return n && (ans === n || ans.split(' ').includes(n) || n.split(' ').every(w => ans.includes(w))); });
+      S.tries++; if (ok) { S.right++; S.open[S.pos] = f.a.length ? 1 : 2; } else formErr = 'Не совпадает. Уточните у руководителя расследования и попробуйте ещё раз.';
+      save(); repaint(); return;
+    }
+  }
+  if (e.target.id !== 'nameform') return; e.preventDefault();
+  const inp = document.getElementById('nm'), v = inp.value.trim(); if (!v) { inp.focus(); return; }
+  S.name = v; S.started = true; save(); render(); window.scrollTo(0, 0);
+});
+document.addEventListener('click', e => {
+  const el = e.target.closest('[data-act],[data-opt],[data-pool],[data-ans],[data-srow],[data-cell]');
+  if (!el || el.disabled) return;
+  const d = el.dataset;
+  if (d.act === 'title') { titleClicks++; clearTimeout(titleTimer); titleTimer = setTimeout(() => titleClicks = 0, 1500); if (titleClicks >= 5) { titleClicks = 0; setTest(!TEST); render(); } return; }
+  if (d.act === 'test-off') { setTest(false); render(); return; }
+  if (d.cell !== undefined) { if (TEST && !busy) { S.done = null; S.sc = null; S.spent = {}; S.open = {}; S.pos = +d.cell; S.task = null; V = null; save(); render(); } return; }
+  if (busy) return;
+  if (d.act === 'go1') { stepBy(1); return; }
+  if (d.act === 'step') { stepBy(1); return; }
+  if (d.act === 'ev-go') { S.spent[S.pos] = 1; save(); stepBy(+d.n); return; }
+  if (d.act === 'retry') { pickTask(CELLS[S.pos].z, CELLS[S.pos].step); repaint(); return; }
+  if (d.act === 'sc-start') { startSelfCheck(); repaint(); return; }
+  if (d.act === 'cert-dl') { downloadCert(); return; }
+  if (d.act === 'board') { boardOpen = !boardOpen; render(); return; }
+  if (d.act === 'dossier') { showDossier = !showDossier; render(); return; }
+  if (d.act === 'sc-next') { S.sc.i++; if (S.sc.i >= S.sc.list.length) S.sc.fin = true; V = null; save(); repaint(); return; }
+  if (d.act === 'sc-exit') { S.sc = null; V = null; save(); repaint(); return; }
+  if (d.act === 'restart') { S = blank(S.name); S.started = true; V = null; save(); render(); window.scrollTo(0, 0); return; }
+  const t = curTask(); if (!t || !V || V.done) return;
+  if (d.opt !== undefined) { V.sel = +d.opt; grade(!!t.opts[+d.opt].ok); return; }
+  if (d.pool !== undefined) { const j = +d.pool; V.pool = V.pool.filter(x => x !== j); V.ans.push(j); repaint(); return; }
+  if (d.ans !== undefined) { const j = V.ans.splice(+d.ans, 1)[0]; V.pool.push(j); repaint(); return; }
+  if (d.act === 'oclear') { V.pool = V.pool.concat(V.ans); V.ans = []; repaint(); return; }
+  if (d.act === 'ocheck') { const right = V.ans.filter((j, p) => j === p).length; grade(right === t.items.length, right); return; }
+  if (d.srow !== undefined) { V.pick[+d.srow] = +d.b; repaint(); return; }
+  if (d.act === 'scheck') { const right = t.items.filter(([, b], j) => V.pick[j] === b).length; grade(right === t.items.length, right); return; }
+});
+window.addEventListener('hashchange', () => { if (location.hash === '#trener') { setTest(true); render(); } });
+
+render();
+})();
+</script>
+
+</body></html>
